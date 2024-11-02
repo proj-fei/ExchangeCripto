@@ -7,13 +7,19 @@ import DAO.Conexao;
 import DAO.UserDao;
 import model.User;
 import view.LoginFrame;
+import view.SignInFrame;
+import view.HubFrame;
 
 
 public class ControllerLogin {
     private LoginFrame view;
-
-    public ControllerLogin(LoginFrame view) {
+    private SignInFrame signInView;
+    private HubFrame hubView;
+    
+    public ControllerLogin(LoginFrame view, SignInFrame signInView, HubFrame hubView) {
         this.view = view;
+        this.signInView = signInView;
+        this.hubView = hubView;
     }
     
     public User login(){
@@ -54,7 +60,13 @@ public class ControllerLogin {
                 JOptionPane.ERROR_MESSAGE
             );
         }
-        
+       
         return null;
+    }
+    
+    public void goToSignIn(){
+       view.setVisible(false);
+       signInView.setVisible(true);
+       
     }
 }

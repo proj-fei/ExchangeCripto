@@ -1,12 +1,17 @@
 package view;
 
-public class CadastroFrame extends javax.swing.JFrame {
+import controller.ControllerSignIn;
+import view.LoginFrame;
+
+public class SignInFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Cadastro
      */
-    public CadastroFrame() {
+    public SignInFrame(LoginFrame lf) {
         initComponents();
+        this.lf = lf;
+        this.cSI = new ControllerSignIn(this, lf);
     }
 
     /**
@@ -37,7 +42,6 @@ public class CadastroFrame extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1200, 800));
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
-        jPanel1.setPreferredSize(new java.awt.Dimension(750, 700));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logoMarrom.png"))); // NOI18N
 
@@ -94,6 +98,11 @@ public class CadastroFrame extends javax.swing.JFrame {
         jBtnLogin.setText("Fazer Login");
         jBtnLogin.setBorder(null);
         jBtnLogin.setPreferredSize(new java.awt.Dimension(100, 22));
+        jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLoginActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -191,7 +200,7 @@ public class CadastroFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -212,6 +221,10 @@ public class CadastroFrame extends javax.swing.JFrame {
     private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtPasswordActionPerformed
+
+    private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
+        cSI.goToLogIn();
+    }//GEN-LAST:event_jBtnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,6 +261,9 @@ public class CadastroFrame extends javax.swing.JFrame {
 //            }
 //        });
 //    }
+    
+    private ControllerSignIn cSI;
+    private LoginFrame lf;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnCadastrar;
