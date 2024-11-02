@@ -1,13 +1,13 @@
 package model;
 import java.util.ArrayList;
-
+import java.math.BigDecimal;
 
 public class Wallet {
     private int id;
-    private double balance;
+    private BigDecimal balance;
     private ArrayList<Coin> criptos_balance = new ArrayList<>();
 
-    public Wallet(int id, double balance) {
+    public Wallet(int id, BigDecimal balance) {
         this.id = id;
         this.balance = balance;
     }
@@ -16,11 +16,11 @@ public class Wallet {
         return id;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 

@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import model.User;
+import model.Wallet;
+import DAO.WalletDao;
 
 public class UserDao {
     private Connection conn;
@@ -28,30 +30,43 @@ public class UserDao {
     }
     
     // Autenticação de Usuário para login
-    public ResultSet authUser(User user) throws SQLException {
+    public User authUser(String cpf, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE cpf = ? AND password = ? ";
         PreparedStatement statement = conn.prepareStatement(sql);
         
-        statement.setString(1, user.getCpf());
-        statement.setString(2, user.getPassword());
-        statement.execute();
+        statement.setString(1, cpf);
+        statement.setString(2, password);
         
-        ResultSet res = statement.getResultSet();
+        ResultSet res = statement.executeQuery();
+
+        if (!res.next()) {
+            return null;
+        }
         
-        return res;
-    }
-    
-    // Recuperar Wallet do Usuário do banco de dados
-    public ResultSet getUserWallet(User user) throws SQLException {
-        String sql = "select * from wallets where userid = ?";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        // Cria e retorna o objeto User com os dados recuperados
+        if(!res.getBoolean("isadmin")){
+            WalletDao wDao = new WalletDao(this.conn);
+            Wallet wallet = wDao.getUserWallet(res.getInt("id"));
+            
+            User user = new User(
+                res.getInt("id"),
+                res.getString("cpf"),
+                res.getString("name"),
+                res.getString("password"),
+                res.getBoolean("isadmin"),
+                wallet
+            );
+            return user;
+        }
+        User user = new User(
+            res.getInt("id"),
+            res.getString("cpf"),
+            res.getString("name"),
+            res.getString("password"),
+            res.getBoolean("isadmin")
+        );
         
-        statement.setInt(1, user.getId());
-        statement.execute();
-        
-        ResultSet res = statement.getResultSet();
-        
-        return res;
+        return user;
     }
     
     // Atualizar Usuário ( Em especifico sua senha )

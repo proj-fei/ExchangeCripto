@@ -8,6 +8,14 @@ public class User {
     private boolean isAdmin;
     private Wallet wallet;
 
+    public User(int id, String cpf, String name, String password, boolean isAdmin) {
+        this.id = id;
+        this.cpf = cpf;
+        this.name = name;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
     public User(int id, String cpf, String name, String password, boolean isAdmin, Wallet wallet) {
         this.id = id;
         this.cpf = cpf;
