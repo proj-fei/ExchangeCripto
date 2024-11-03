@@ -34,15 +34,17 @@ public class ControllerLogin {
             );
             
             if (user == null){
+                this.cleanFields();
                 JOptionPane.showMessageDialog(
                     view, 
                     "Usuário não encontrado!",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE
                 );
+                
                 return null;
             }
-            
+            this.cleanFields();
             JOptionPane.showMessageDialog(
                 view, 
                 "Login Efetuado!",
@@ -53,9 +55,10 @@ public class ControllerLogin {
             return user;
         
         } catch(SQLException e) {
+            this.cleanFields();
             JOptionPane.showMessageDialog(
                 view, 
-                e,
+                "Erro de Conexão",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -65,8 +68,14 @@ public class ControllerLogin {
     }
     
     public void goToSignIn(){
+       this.cleanFields();
        view.setVisible(false);
        signInView.setVisible(true);
        
+    }
+    
+    public void cleanFields(){
+        view.getjTxtCpf().setText("");
+        view.getjTxtPassword().setText("");
     }
 }

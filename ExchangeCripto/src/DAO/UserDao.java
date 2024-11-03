@@ -16,14 +16,14 @@ public class UserDao {
     }
     
     // Criar Novo Usuário
-    public void createUser(User user) throws SQLException{
+    public void createUser(String cpf, String name, String password, int isAdmin) throws SQLException{
         String sql = "INSERT INTO users (name, cpf, password, isadmin) values (?,?,?,?)";
         PreparedStatement statement = conn.prepareStatement(sql);
         
-        statement.setString(1, user.getName());
-        statement.setString(2, user.getCpf());
-        statement.setString(3, user.getPassword());
-        statement.setBoolean(4, user.getIsAdmin());
+        statement.setString(1, name);
+        statement.setString(2, cpf);
+        statement.setString(3, password);
+        statement.setInt(4, isAdmin);
         statement.execute();
         
         conn.close();
@@ -53,7 +53,7 @@ public class UserDao {
                 res.getString("cpf"),
                 res.getString("name"),
                 res.getString("password"),
-                res.getBoolean("isadmin"),
+                res.getInt("isadmin"),
                 wallet
             );
             return user;
@@ -63,7 +63,7 @@ public class UserDao {
             res.getString("cpf"),
             res.getString("name"),
             res.getString("password"),
-            res.getBoolean("isadmin")
+            res.getInt("isadmin")
         );
         
         return user;
