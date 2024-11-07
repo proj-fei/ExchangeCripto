@@ -1,12 +1,30 @@
 package view;
 
+import javax.swing.JTextField;
+import model.User;
+import controller.ControllerLogin;
+import view.HubFrame;
+import view.SignInFrame;
+
 public class LoginFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form login
-     */
-    public LoginFrame() {
+    public LoginFrame(HubFrame hf) {
         initComponents();
+        this.signInView = new SignInFrame(this); // Cria uma Pagina de Cadastro
+        this.hubView = hf; // Recebe a Pagina da home do Componente Principal
+        cl = new ControllerLogin(this, this.signInView, this.hubView); // Cria um controller passando a si, o hub e o signIn frames
+    }
+
+    public JTextField getjTxtCpf() {
+        return jTxtCpf;
+    }
+
+    public JTextField getjTxtPassword() {
+        return jTxtPassword;
+    }
+
+    public void setHubView(HubFrame hubView) {
+        this.hubView = hubView;
     }
 
     /**
@@ -25,17 +43,16 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTxtCpf = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTxtPassword = new javax.swing.JTextField();
         jBtnEntrar = new javax.swing.JButton();
-        jBtnCadastro = new javax.swing.JButton();
+        jBtnSignIn = new javax.swing.JButton();
+        jTxtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaCoin - Login");
         setBackground(new java.awt.Color(36, 25, 19));
-        setPreferredSize(new java.awt.Dimension(750, 700));
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
-        jPanel1.setPreferredSize(new java.awt.Dimension(750, 700));
+        jPanel1.setPreferredSize(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logoMarrom.png"))); // NOI18N
 
@@ -66,16 +83,6 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel4.setText("Senha:");
         jLabel4.setPreferredSize(new java.awt.Dimension(140, 60));
 
-        jTxtPassword.setBackground(new java.awt.Color(255, 255, 255));
-        jTxtPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTxtPassword.setForeground(new java.awt.Color(0, 0, 0));
-        jTxtPassword.setBorder(null);
-        jTxtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtPasswordActionPerformed(evt);
-            }
-        });
-
         jBtnEntrar.setBackground(new java.awt.Color(36, 25, 19));
         jBtnEntrar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jBtnEntrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,12 +93,21 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        jBtnCadastro.setBackground(new java.awt.Color(225, 214, 154));
-        jBtnCadastro.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jBtnCadastro.setForeground(new java.awt.Color(0, 0, 0));
-        jBtnCadastro.setText("Criar Conta");
-        jBtnCadastro.setBorder(null);
-        jBtnCadastro.setPreferredSize(new java.awt.Dimension(100, 22));
+        jBtnSignIn.setBackground(new java.awt.Color(225, 214, 154));
+        jBtnSignIn.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jBtnSignIn.setForeground(new java.awt.Color(0, 0, 0));
+        jBtnSignIn.setText("Criar Conta");
+        jBtnSignIn.setBorder(null);
+        jBtnSignIn.setPreferredSize(new java.awt.Dimension(100, 22));
+        jBtnSignIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSignInActionPerformed(evt);
+            }
+        });
+
+        jTxtPassword.setBackground(new java.awt.Color(255, 255, 255));
+        jTxtPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jTxtPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -101,18 +117,18 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                            .addComponent(jTxtPassword)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(jBtnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jBtnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(209, 209, 209))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -134,7 +150,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jBtnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -179,16 +195,16 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEntrarActionPerformed
-        // TODO add your handling code here:
+         user = cl.login();
     }//GEN-LAST:event_jBtnEntrarActionPerformed
-
-    private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtPasswordActionPerformed
 
     private void jTxtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtCpfActionPerformed
+
+    private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
+        cl.goToSignIn();
+    }//GEN-LAST:event_jBtnSignInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,10 +242,15 @@ public class LoginFrame extends javax.swing.JFrame {
 //            }
 //        });
 //    }
+    
+    private ControllerLogin cl;
+    private User user;
+    private SignInFrame signInView;
+    private HubFrame hubView;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnCadastro;
     private javax.swing.JButton jBtnEntrar;
+    private javax.swing.JButton jBtnSignIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -237,6 +258,6 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTxtCpf;
-    private javax.swing.JTextField jTxtPassword;
+    private javax.swing.JPasswordField jTxtPassword;
     // End of variables declaration//GEN-END:variables
 }

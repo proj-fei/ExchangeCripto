@@ -33,10 +33,10 @@ public class HubFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JavaCoin - Home Page");
-        setPreferredSize(new java.awt.Dimension(1200, 800));
         setSize(new java.awt.Dimension(1200, 800));
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
+        jPanel1.setPreferredSize(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logoMarromSmall.png"))); // NOI18N
 
@@ -140,19 +140,9 @@ public class HubFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnComprarCrypto2;
-    private javax.swing.JButton jBtnCotacao2;
-    private javax.swing.JButton jBtnDeposito2;
-    private javax.swing.JButton jBtnExtrato2;
-    private javax.swing.JButton jBtnLogOut2;
-    private javax.swing.JButton jBtnSaque2;
-    private javax.swing.JButton jBtnVenderCrypto2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 }
