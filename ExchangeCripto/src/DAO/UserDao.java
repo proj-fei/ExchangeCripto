@@ -18,15 +18,33 @@ public class UserDao {
     // Criar Novo Usuário
     public void createUser(String cpf, String name, String password, int isAdmin) throws SQLException{
         String sql = "INSERT INTO users (name, cpf, password, isadmin) values (?,?,?,?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         
         statement.setString(1, name);
         statement.setString(2, cpf);
         statement.setString(3, password);
         statement.setInt(4, isAdmin);
-        statement.execute();
+        statement.executeUpdate();
         
-        conn.close();
+        if(isAdmin == 0){
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            int userId = 0;
+            
+            if(generatedKeys.next()) {
+                userId = generatedKeys.getInt(1);
+            }
+            
+            statement.close();
+            if(userId == 0){
+                throw new SQLException("ID de Usuário não pode ser 0"); 
+            }
+            
+            WalletDao dao = new WalletDao(conn);
+            dao.createWallet(userId);
+        }
+        else {
+            conn.close();
+        }
     }
     
     // Autenticação de Usuário para login
@@ -42,12 +60,11 @@ public class UserDao {
         if (!res.next()) {
             return null;
         }
-        
         // Cria e retorna o objeto User com os dados recuperados
-        if(!res.getBoolean("isadmin")){
+        if(res.getInt("isadmin") == 0){
             WalletDao wDao = new WalletDao(this.conn);
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
-            
+            System.out.println("Criou a carteira");
             User user = new User(
                 res.getInt("id"),
                 res.getString("cpf"),
@@ -56,6 +73,9 @@ public class UserDao {
                 res.getInt("isadmin"),
                 wallet
             );
+            res.close();
+            statement.close();
+            conn.close();
             return user;
         }
         User user = new User(
@@ -65,7 +85,9 @@ public class UserDao {
             res.getString("password"),
             res.getInt("isadmin")
         );
-        
+        res.close();
+        statement.close();
+        conn.close();
         return user;
     }
     

@@ -3,16 +3,14 @@ package view;
 import javax.swing.JTextField;
 import model.User;
 import controller.ControllerLogin;
-import view.HubFrame;
 import view.SignInFrame;
 
 public class LoginFrame extends javax.swing.JFrame {
 
-    public LoginFrame(HubFrame hf) {
+    public LoginFrame() {
         initComponents();
         this.signInView = new SignInFrame(this); // Cria uma Pagina de Cadastro
-        this.hubView = hf; // Recebe a Pagina da home do Componente Principal
-        cl = new ControllerLogin(this, this.signInView, this.hubView); // Cria um controller passando a si, o hub e o signIn frames
+        cl = new ControllerLogin(this, this.signInView); // Cria um controller passando a si, o hub e o signIn frames
     }
 
     public JTextField getjTxtCpf() {
@@ -23,9 +21,6 @@ public class LoginFrame extends javax.swing.JFrame {
         return jTxtPassword;
     }
 
-    public void setHubView(HubFrame hubView) {
-        this.hubView = hubView;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,7 +190,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEntrarActionPerformed
-         user = cl.login();
+        cl.login();
     }//GEN-LAST:event_jBtnEntrarActionPerformed
 
     private void jTxtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCpfActionPerformed
@@ -246,8 +241,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private ControllerLogin cl;
     private User user;
     private SignInFrame signInView;
-    private HubFrame hubView;
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnEntrar;
     private javax.swing.JButton jBtnSignIn;

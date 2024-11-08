@@ -7,8 +7,8 @@ Para iniciar o projeto é necessário instanciar o banco de dados, pode utilizar
 docker build -t postgres . 
 ``` 
 ```bash
-docker volume create pgdata
+docker volume create java_data
 ``` 
 ```bash
-docker run --name java_db -d -p 5432:5432 -v pgdata:/var/lib/postgresql/data postgres    
+docker run --name java_db -d -p 5431:5431 -v java_data:/var/lib/postgresql/data postgres    
 ``` 

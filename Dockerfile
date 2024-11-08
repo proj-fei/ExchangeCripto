@@ -1,7 +1,7 @@
-# Use a imagem oficial do PostgreSQL 16
+# PostgreSQL 16
 FROM postgres:16
 
-# Define as variáveis de ambiente para configuração do banco de dados
+#  Variáveis de ambiente
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 ENV POSTGRES_DB=postgres
