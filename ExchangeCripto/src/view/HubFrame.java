@@ -11,6 +11,10 @@ public class HubFrame extends javax.swing.JFrame {
         this.ch = new ControllerHub(this, user);
     }
 
+    public JLabel getjLabelCPF() {
+        return jLabelCPF;
+    }
+        
     public JLabel getjLabelBTCquote() {
         return jLabelBTCquote;
     }
@@ -40,7 +44,7 @@ public class HubFrame extends javax.swing.JFrame {
     }
 
     public JLabel getjLabelWelcome() {
-        return jLabelWelcome;
+        return jLabelCPF;
     }
 
     public JLabel getjLabelXRPquote() {
@@ -99,7 +103,7 @@ public class HubFrame extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
-        jLabelWelcome = new javax.swing.JLabel();
+        jLabelCPF = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel18 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
@@ -123,6 +127,7 @@ public class HubFrame extends javax.swing.JFrame {
         jLabelXRPsaldo = new javax.swing.JLabel();
         jLabelXRPquote = new javax.swing.JLabel();
         jBtnRefresh = new javax.swing.JButton();
+        jLabelWelcome = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         jPanel28 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
@@ -551,9 +556,9 @@ public class HubFrame extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(225, 214, 154));
         jPanel16.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabelWelcome.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabelWelcome.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelWelcome.setText("Bem vindo investidor!");
+        jLabelCPF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabelCPF.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelCPF.setText("000.000.000-00");
 
         jSeparator3.setForeground(new java.awt.Color(36, 25, 19));
 
@@ -780,6 +785,10 @@ public class HubFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabelWelcome.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelWelcome.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelWelcome.setText("Bem vindo investidor!");
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -787,9 +796,12 @@ public class HubFrame extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -807,17 +819,22 @@ public class HubFrame extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(131, Short.MAX_VALUE))
+                                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(131, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabelCPF)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addComponent(jLabelWelcome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelCPF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -934,6 +951,11 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnSaque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/2.png"))); // NOI18N
         jBtnSaque.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
         jBtnSaque.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnSaque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSaqueActionPerformed(evt);
+            }
+        });
 
         jBtnExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/3.png"))); // NOI18N
         jBtnExtrato.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
@@ -942,6 +964,11 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/1.png"))); // NOI18N
         jBtnDeposito.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
         jBtnDeposito.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnDepositoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -966,7 +993,7 @@ public class HubFrame extends javax.swing.JFrame {
                         .addComponent(jBtnDeposito)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnSaque)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBtnExtrato))
                     .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1058,7 +1085,7 @@ public class HubFrame extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1069,7 +1096,7 @@ public class HubFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         pack();
@@ -1098,6 +1125,14 @@ public class HubFrame extends javax.swing.JFrame {
     private void jBtnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChangeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnChangeActionPerformed
+
+    private void jBtnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDepositoActionPerformed
+        ch.callAction("Depósito", "Valor:", "Depositar");
+    }//GEN-LAST:event_jBtnDepositoActionPerformed
+
+    private void jBtnSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaqueActionPerformed
+        ch.callAction("Saque", "Valor:", "Sacar");
+    }//GEN-LAST:event_jBtnSaqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1173,6 +1208,7 @@ public class HubFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelBTCquote;
     private javax.swing.JLabel jLabelBTCsaldo;
+    private javax.swing.JLabel jLabelCPF;
     private javax.swing.JLabel jLabelETHquote;
     private javax.swing.JLabel jLabelETHsaldo;
     private javax.swing.JLabel jLabelOther;

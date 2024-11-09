@@ -72,4 +72,25 @@ public class WalletDao {
         return wallet;
     }
     
+    public BigDecimal getSaldo(int id) throws SQLException {
+        String sql = "select balance from wallets where id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, id);
+        ResultSet res = statement.executeQuery();
+        if(!res.next()) {
+            return null;
+        }
+        return res.getBigDecimal("balance");
+    }
+    
+    public void setBalance(int id, BigDecimal value) throws SQLException {        
+        String sql = "UPDATE wallets SET balance = ? WHERE id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql); 
+        statement.setBigDecimal(1, value);
+        statement.setInt(2, id);
+        statement.executeUpdate();
+        statement.close();
+    }
+    
+    
 }

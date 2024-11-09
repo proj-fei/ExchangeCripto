@@ -2,7 +2,7 @@ package controller;
 
 import model.User;
 import view.HubFrame;
-
+import view.FormFrame;
 
 public class ControllerHub {
     private HubFrame view;
@@ -17,6 +17,7 @@ public class ControllerHub {
     
     public void populateHomePageData(){
         view.getjLabelWelcome().setText("bem-vindo(a) " + user.getName() + "!");
+        view.getjLabelCPF().setText(user.getCpf());
         
         // Definição do saldo
         view.getjLabelSaldo().setText("R$ " + user.getWallet().getBalance());
@@ -28,5 +29,11 @@ public class ControllerHub {
         view.getjLabelBTCquote().setText("Cotação: " + user.getWallet().getBTCQuote());
         view.getjLabelETHquote().setText("Cotação: " + user.getWallet().getETHQuote());
         view.getjLabelXRPquote().setText("Cotação: " + user.getWallet().getXRPQuote());
+    }
+    
+    public void callAction(String title, String subTitle, String btnText){
+        FormFrame ff = new FormFrame(title, subTitle, btnText, user, view);
+        ff.setVisible(true);
+        this.populateHomePageData();
     }
 }

@@ -47,6 +47,24 @@ public class UserDao {
         }
     }
     
+    public boolean authPassword(String password, int userId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE id = ? and password = ? ";
+        PreparedStatement statement = conn.prepareStatement(sql);        
+        statement.setInt(1, userId);
+        statement.setString(2, password);
+
+        ResultSet res = statement.executeQuery();
+        if (res.next()){
+            statement.close();
+            res.close();
+            return true;
+        }
+        statement.close();
+        res.close();
+        return false;
+    }
+    
+    
     // Autenticação de Usuário para login
     public User authUser(String cpf, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE cpf = ? AND password = ? ";
@@ -56,7 +74,7 @@ public class UserDao {
         statement.setString(2, password);
         
         ResultSet res = statement.executeQuery();
-
+        
         if (!res.next()) {
             return null;
         }
@@ -64,7 +82,6 @@ public class UserDao {
         if(res.getInt("isadmin") == 0){
             WalletDao wDao = new WalletDao(this.conn);
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
-            System.out.println("Criou a carteira");
             User user = new User(
                 res.getInt("id"),
                 res.getString("cpf"),

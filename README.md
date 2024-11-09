@@ -10,5 +10,5 @@ docker build -t postgres .
 docker volume create java_data
 ``` 
 ```bash
-docker run --name java_db -d -p 5431:5431 -v java_data:/var/lib/postgresql/data postgres    
+docker run --name java_db -d -p 5432:5432 -v java_data:/var/lib/postgresql/data postgres    
 ``` 
