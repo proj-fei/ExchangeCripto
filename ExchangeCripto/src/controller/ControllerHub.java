@@ -1,6 +1,7 @@
 package controller;
 
 import model.User;
+import view.FormCriptoFrame;
 import view.HubFrame;
 import view.FormFrame;
 
@@ -31,9 +32,16 @@ public class ControllerHub {
         view.getjLabelXRPquote().setText("Cotação: " + user.getWallet().getXRPQuote());
     }
     
-    public void callAction(String title, String subTitle, String btnText){
-        FormFrame ff = new FormFrame(title, subTitle, btnText, user, view);
-        ff.setVisible(true);
+    public void callAction(int num,String title, String subTitle, String btnText){
+        if (num == 1){
+            FormFrame ff = new FormFrame(title, subTitle, btnText, user, view);
+            ff.setVisible(true);
+        }
+        else {
+            FormCriptoFrame fcf = new FormCriptoFrame(title, subTitle, btnText, user, view);
+            fcf.setVisible(true);
+        }
+        
         this.populateHomePageData();
     }
 }

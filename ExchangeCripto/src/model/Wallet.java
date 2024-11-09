@@ -12,6 +12,15 @@ public class Wallet {
         this.balance = balance;
         this.criptos = currencies;
     }
+    
+    public Coin getCriptoByName(String name) {
+        for (Coin cripto : criptos) {
+            if (cripto.getName().equalsIgnoreCase(name)) {
+                return cripto;
+            }
+        }
+        return null;
+    }
 
     public int getId() {
         return id;
@@ -63,5 +72,9 @@ public class Wallet {
     // Coleta generia de cotação para demais moedas
     public BigDecimal getGenericCoinQuote(int index) {
         return criptos.get(index).getBalance();
+    }
+
+    public ArrayList<Coin> getCriptos() {
+        return criptos;
     }
 }

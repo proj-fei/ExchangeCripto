@@ -77,8 +77,10 @@ public class Coin {
     public void setQuotation(BigDecimal quotation) {
         this.quotation = quotation;
     }
-    
-    
+
+    public int getId() {
+        return id;
+    }
     
 }
 

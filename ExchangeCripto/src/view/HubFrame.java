@@ -58,6 +58,10 @@ public class HubFrame extends javax.swing.JFrame {
     public JLabel getjLabelOther() {
         return jLabelOther;
     }
+
+    public ControllerHub getCh() {
+        return ch;
+    }
     
     
     
@@ -145,7 +149,7 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnLogout = new javax.swing.JButton();
         jBtnSobre = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaCoin - Home Page");
         setSize(new java.awt.Dimension(1200, 800));
 
@@ -906,11 +910,21 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnSellCripto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 25, 19)));
         jBtnSellCripto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnSellCripto.setIconTextGap(0);
+        jBtnSellCripto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSellCriptoActionPerformed(evt);
+            }
+        });
 
         jBtnBuyCripto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/buy.png"))); // NOI18N
         jBtnBuyCripto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 25, 19)));
         jBtnBuyCripto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnBuyCripto.setIconTextGap(0);
+        jBtnBuyCripto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuyCriptoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -1127,12 +1141,20 @@ public class HubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnChangeActionPerformed
 
     private void jBtnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDepositoActionPerformed
-        ch.callAction("Depósito", "Valor:", "Depositar");
+        ch.callAction(1,"Depósito", "Valor:", "Depositar");
     }//GEN-LAST:event_jBtnDepositoActionPerformed
 
     private void jBtnSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaqueActionPerformed
-        ch.callAction("Saque", "Valor:", "Sacar");
+        ch.callAction(1,"Saque", "Valor:", "Sacar");
     }//GEN-LAST:event_jBtnSaqueActionPerformed
+
+    private void jBtnBuyCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuyCriptoActionPerformed
+        ch.callAction(2,"Comprar Cripto", "Valor:", "Comprar");
+    }//GEN-LAST:event_jBtnBuyCriptoActionPerformed
+
+    private void jBtnSellCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSellCriptoActionPerformed
+        ch.callAction(2,"Vender Cripto", "Valor:", "Vender");
+    }//GEN-LAST:event_jBtnSellCriptoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="JavaCoin - Home Page"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1200, 800]"/>
@@ -1735,6 +1735,9 @@
                         <Property name="horizontalTextPosition" type="int" value="0"/>
                         <Property name="iconTextGap" type="int" value="0"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnSellCriptoActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="jBtnBuyCripto">
                       <Properties>
@@ -1751,6 +1754,9 @@
                         <Property name="horizontalTextPosition" type="int" value="0"/>
                         <Property name="iconTextGap" type="int" value="0"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBuyCriptoActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

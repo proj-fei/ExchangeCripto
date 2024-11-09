@@ -84,4 +84,26 @@ public class CurrencyDao {
         
         return currency;
     }
+    
+    public BigDecimal getCurrencyBalance(int walletId, int currencyId) throws SQLException {
+        String sql = "select balance from wallet_currency_balances WHERE walletid = ? AND currencyid = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, walletId);
+        statement.setInt(2, currencyId);
+        ResultSet res = statement.executeQuery();
+        if(!res.next()) {
+            return null;
+        }
+        return res.getBigDecimal("balance");
+    }
+    
+    public void updateCurrency(int walletId, int currencyId, BigDecimal value ) throws SQLException {
+        String sql = "UPDATE wallet_currency_balances SET balance = ? WHERE walletid = ? AND currencyid = ?";
+        PreparedStatement statement = conn.prepareStatement(sql); 
+        statement.setBigDecimal(1, value);
+        statement.setInt(2, walletId);
+        statement.setInt(3, currencyId);
+        statement.executeUpdate();
+        statement.close();
+    }
 }
