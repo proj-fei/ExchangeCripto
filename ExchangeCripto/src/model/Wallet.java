@@ -1,20 +1,23 @@
 package model;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Wallet {
     private int id;
     private BigDecimal balance;
-    private ArrayList<Coin> criptos = new ArrayList<>(); // 0 = BTC, 1 = ETH, 2 = XRP, ... = novas moedas
+    private ArrayList<Moeda> criptos = new ArrayList<>(); // 0 = BTC, 1 = ETH, 2 = XRP, ... = novas moedas
 
-    public Wallet(int id, BigDecimal balance, ArrayList<Coin> currencies) {
+    public Wallet(int id, BigDecimal balance, ArrayList<Moeda> currencies) {
         this.id = id;
         this.balance = balance;
+        currencies.sort(Comparator.comparing(Moeda::getName));
         this.criptos = currencies;
     }
     
-    public Coin getCriptoByName(String name) {
-        for (Coin cripto : criptos) {
+    public Moeda getCriptoByName(String name) {
+        for (Moeda cripto : criptos) {
             if (cripto.getName().equalsIgnoreCase(name)) {
                 return cripto;
             }
@@ -74,7 +77,23 @@ public class Wallet {
         return criptos.get(index).getBalance();
     }
 
-    public ArrayList<Coin> getCriptos() {
+    public ArrayList<Moeda> getCriptos() {
         return criptos;
+    }
+    
+    public ArrayList<Object[]> getCriptoData() {
+        ArrayList<Object[]> criptoData = new ArrayList<>();
+        for (Moeda c : criptos){
+            Object[] linha = {
+                c.getName(),
+                c.getQuotation(),
+                c.getTaxCompra(),
+                c.getTaxVenda(),
+                c.getBalance().multiply(c.getQuotation()),
+                c.getBalance()
+            };
+            criptoData.add(linha);
+        }
+        return criptoData;
     }
 }

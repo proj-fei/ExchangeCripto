@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.Coin;
+import model.Moeda;
 
 
 public class CurrencyDao {
@@ -42,17 +42,17 @@ public class CurrencyDao {
         statement.close();
     }
     
-    public ArrayList<Coin> getCurrencyByWallet(int walletId ) throws SQLException {
+    public ArrayList<Moeda> getCurrencyByWallet(int walletId ) throws SQLException {
         String sql = "SELECT * FROM wallet_currency_balances where walletid = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, walletId);
         ResultSet res = statement.executeQuery();
         
-        ArrayList<Coin> currencies = new ArrayList<>();
+        ArrayList<Moeda> currencies = new ArrayList<>();
         while (res.next()) {
             int currencyId = res.getInt("currencyid");
             BigDecimal balance = res.getBigDecimal("balance");
-            Coin coinDetails = getCurrencyById(currencyId);
+            Moeda coinDetails = getCurrencyById(currencyId);
             coinDetails.setBalance(balance);
             currencies.add(coinDetails);
         }
@@ -62,12 +62,12 @@ public class CurrencyDao {
         return currencies;
     }
     
-    public Coin getCurrencyById(int currencyId) throws SQLException {
+    public Moeda getCurrencyById(int currencyId) throws SQLException {
         String sql = "SELECT * FROM currency where id = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, currencyId);
         ResultSet res = statement.executeQuery();
-        Coin currency = null;
+        Moeda currency = null;
         if(res.next()) {
             int id = res.getInt("id");
             String name = res.getString("name");
@@ -76,7 +76,7 @@ public class CurrencyDao {
             int taxV = res.getInt("taxv");
             int taxC = res.getInt("taxc");
             
-            currency = new Coin(id, taxV, taxC, name, acronym, quote, BigDecimal.ZERO);
+            currency = new Moeda(id, taxV, taxC, name, acronym, quote, BigDecimal.ZERO);
         }
         
         res.close();

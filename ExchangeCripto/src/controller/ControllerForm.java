@@ -9,8 +9,8 @@ import DAO.CurrencyDao;
 import DAO.UserDao;
 import DAO.WalletDao;
 import java.awt.Choice;
-import model.Coin;
-import model.User;
+import model.Moeda;
+import model.Investidor;
 import view.FormCriptoFrame;
 import view.FormFrame;
 import view.HubFrame;
@@ -21,16 +21,16 @@ public class ControllerForm {
     private Choice selector;
     private HubFrame hbView;
     private String function;
-    private User user;
+    private Investidor user;
 
-    public ControllerForm(FormFrame view, String title, User user, HubFrame hbView) {
+    public ControllerForm(FormFrame view, String title, Investidor user, HubFrame hbView) {
         this.ffView = view;
         this.function = title;
         this.user = user;
         this.hbView = hbView;
     }
 
-    public ControllerForm(FormCriptoFrame ffCriptoView, String function, User user, HubFrame hbView) {
+    public ControllerForm(FormCriptoFrame ffCriptoView, String function, Investidor user, HubFrame hbView) {
         this.ffCriptoView = ffCriptoView;
         this.hbView = hbView;
         this.function = function;
@@ -38,9 +38,11 @@ public class ControllerForm {
         
         selector = ffCriptoView.getjSelectCriptos();
         selector.removeAll();
-        for(Coin coin : user.getWallet().getCriptos()) {
-            selector.add(coin.getName());
+        for(Moeda coin : user.getWallet().getCriptos()) {
         }
+        selector.add("Bitcoin");
+        selector.add("Ethereum");
+        selector.add("Ripple");
     }
     
     public void action(){
@@ -53,8 +55,10 @@ public class ControllerForm {
                 break;
             case "Comprar Cripto":
                 this.comprarCripto();
+                break;
             case "Vender Cripto":
                 this.venderCripto();
+                break;
         }
     }
     
@@ -187,7 +191,7 @@ public class ControllerForm {
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffView, 
-                "Erro de Conexão: ",
+                "Erro de Conexão",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -232,7 +236,7 @@ public class ControllerForm {
         try {
             // Estabelencedo Conexão
             conn = conexao.getConnection();
-
+            
             // Validando senha
             UserDao userDao = new UserDao(conn);
             boolean auth = userDao.authPassword(
@@ -241,8 +245,9 @@ public class ControllerForm {
             );
         
             if (!auth){
-                throw new IllegalArgumentException("Senha Inválida.");
+                throw new Exception("Senha Inválida.");
             }
+
             
             // Obetendo e validado valor
             BigDecimal value = new BigDecimal(ffCriptoView.getjTxtInput().getText());
@@ -255,7 +260,7 @@ public class ControllerForm {
             
             // Obetendo e validado cripto
             int indexCripto = selector.getSelectedIndex();
-            Coin cripto = user.getWallet().getCriptos().get(indexCripto);
+            Moeda cripto = user.getWallet().getCriptos().get(indexCripto);
             if (cripto == null) {
                 throw new Exception("Cripto Moeda não encontrada.");
             }
@@ -362,7 +367,7 @@ public class ControllerForm {
             
             // Obetendo e validado cripto
             int indexCripto = selector.getSelectedIndex();
-            Coin cripto = user.getWallet().getCriptos().get(indexCripto);
+            Moeda cripto = user.getWallet().getCriptos().get(indexCripto);
             if (cripto == null) {
                 throw new Exception("Cripto Moeda não encontrada.");
             }

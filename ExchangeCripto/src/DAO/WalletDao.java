@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import model.Coin;
+import model.Moeda;
 import model.Wallet;
 
 
@@ -58,7 +58,7 @@ public class WalletDao {
         }
         
         int walletId = res.getInt("id");
-        ArrayList<Coin> currencies = new ArrayList<>();
+        ArrayList<Moeda> currencies = new ArrayList<>();
         CurrencyDao cDao = new CurrencyDao(this.conn);
         currencies = cDao.getCurrencyByWallet(walletId);
         Wallet wallet = new Wallet(

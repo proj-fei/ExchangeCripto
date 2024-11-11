@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import DAO.Conexao;
 import DAO.UserDao;
-import model.User;
+import model.Investidor;
 import view.LoginFrame;
 import view.SignInFrame;
 import view.HubFrame;
@@ -26,7 +26,7 @@ public class ControllerLogin {
         try {
             Connection conn = conexao.getConnection();
             UserDao dao = new UserDao(conn);
-            User user = dao.authUser(
+            Investidor user = dao.authUser(
                 view.getjTxtCpf().getText(), 
                 view.getjTxtPassword().getText()
             );

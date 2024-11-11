@@ -1,7 +1,7 @@
 package model;
 import java.math.BigDecimal;
 
-public class Coin {
+public class Moeda {
     private int id;
     private int taxVenda;
     private int taxCompra;
@@ -10,7 +10,7 @@ public class Coin {
     private BigDecimal balance;
     private BigDecimal quotation;
 
-    public Coin(
+    public Moeda(
             int id, 
             int taxVenda, 
             int taxCompra, 
@@ -84,6 +84,6 @@ public class Coin {
     
 }
 
-// As classe de Bitcoin, Ehtereum e Ripple mantém a mesma estrutura de Coin e não possuem diferença, já que no projeto
+// As classe de Bitcoin, Ehtereum e Ripple mantém a mesma estrutura de Moeda e não possuem diferença, já que no projeto
 // utilizamos polimorfismo tratamos todas as moedas de forma genérica então elas são classes para representar as principais
 // moedas do sistema.

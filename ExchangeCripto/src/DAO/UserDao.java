@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import model.User;
+import model.Investidor;
 import model.Wallet;
 import DAO.WalletDao;
 
@@ -66,7 +66,7 @@ public class UserDao {
     
     
     // Autenticação de Usuário para login
-    public User authUser(String cpf, String password) throws SQLException {
+    public Investidor authUser(String cpf, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE cpf = ? AND password = ? ";
         PreparedStatement statement = conn.prepareStatement(sql);
         
@@ -78,11 +78,11 @@ public class UserDao {
         if (!res.next()) {
             return null;
         }
-        // Cria e retorna o objeto User com os dados recuperados
+        // Cria e retorna o objeto Investidor com os dados recuperados
         if(res.getInt("isadmin") == 0){
             WalletDao wDao = new WalletDao(this.conn);
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
-            User user = new User(
+            Investidor user = new Investidor(
                 res.getInt("id"),
                 res.getString("cpf"),
                 res.getString("name"),
@@ -95,7 +95,7 @@ public class UserDao {
             conn.close();
             return user;
         }
-        User user = new User(
+        Investidor user = new Investidor(
             res.getInt("id"),
             res.getString("cpf"),
             res.getString("name"),
@@ -109,7 +109,7 @@ public class UserDao {
     }
     
     // Atualizar Usuário ( Em especifico sua senha )
-    public void updateUser(User user) throws SQLException {
+    public void updateUser(Investidor user) throws SQLException {
         String sql = "update users set password = ? where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, user.getPassword());
@@ -119,7 +119,7 @@ public class UserDao {
     }
     
     // Excluir Usuário
-    public void excluir(User user) throws SQLException{
+    public void excluir(Investidor user) throws SQLException{
         String sql = "delete from users where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, user.getCpf());

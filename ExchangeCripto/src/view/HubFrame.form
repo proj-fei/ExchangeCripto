@@ -1647,9 +1647,9 @@
                               <Table columnCount="6" rowCount="4">
                                 <Column editable="false" title="Moeda" type="java.lang.String"/>
                                 <Column editable="false" title="Cota&#xe7;&#xe3;o" type="java.lang.Double"/>
-                                <Column editable="false" title="Taxa de Venda" type="java.lang.Double"/>
                                 <Column editable="false" title="Taxa de Compra" type="java.lang.Double"/>
-                                <Column editable="false" title="Valor Investido" type="java.lang.Double"/>
+                                <Column editable="false" title="Taxa de Venda" type="java.lang.Double"/>
+                                <Column editable="false" title="Valor" type="java.lang.Double"/>
                                 <Column editable="false" title="Qtd. Adquirida" type="java.lang.Double"/>
                               </Table>
                             </Property>

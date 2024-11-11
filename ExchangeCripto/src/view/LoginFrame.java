@@ -1,7 +1,7 @@
 package view;
 
 import javax.swing.JTextField;
-import model.User;
+import model.Investidor;
 import controller.ControllerLogin;
 import view.SignInFrame;
 
@@ -239,7 +239,7 @@ public class LoginFrame extends javax.swing.JFrame {
 //    }
     
     private ControllerLogin cl;
-    private User user;
+    private Investidor user;
     private SignInFrame signInView;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

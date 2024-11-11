@@ -1,17 +1,20 @@
 package controller;
 
-import model.User;
+import model.Investidor;
+import model.Wallet;
 import view.FormCriptoFrame;
 import view.HubFrame;
 import view.FormFrame;
 
 public class ControllerHub {
     private HubFrame view;
-    private User user;
+    private Investidor user;
+    private Wallet wallet;
 
-    public ControllerHub(HubFrame view, User user) {
+    public ControllerHub(HubFrame view, Investidor user) {
         this.view = view;
         this.user = user;
+        this.wallet = user.getWallet();
         
         this.populateHomePageData();
     }
@@ -22,14 +25,14 @@ public class ControllerHub {
         
         // Definição do saldo
         view.getjLabelSaldo().setText("R$ " + user.getWallet().getBalance());
-        view.getjLabelBTCsaldo().setText(user.getWallet().getBTCBalance() + " BTC");
-        view.getjLabelETHsaldo().setText(user.getWallet().getETHBalance() + " ETH");
-        view.getjLabelXRPsaldo().setText(user.getWallet().getXRPBalance() + " XRP");
+        view.getjLabelBTCsaldo().setText(wallet.getBTCBalance() + " BTC");
+        view.getjLabelETHsaldo().setText(wallet.getETHBalance() + " ETH");
+        view.getjLabelXRPsaldo().setText(wallet.getXRPBalance() + " XRP");
         
         // Definição das cotação
-        view.getjLabelBTCquote().setText("Cotação: " + user.getWallet().getBTCQuote());
-        view.getjLabelETHquote().setText("Cotação: " + user.getWallet().getETHQuote());
-        view.getjLabelXRPquote().setText("Cotação: " + user.getWallet().getXRPQuote());
+        view.getjLabelBTCquote().setText("Cotação: " + wallet.getBTCQuote());
+        view.getjLabelETHquote().setText("Cotação: " + wallet.getETHQuote());
+        view.getjLabelXRPquote().setText("Cotação: " + wallet.getXRPQuote());
     }
     
     public void callAction(int num,String title, String subTitle, String btnText){
@@ -43,5 +46,11 @@ public class ControllerHub {
         }
         
         this.populateHomePageData();
+    }
+    
+    public void updateCriptoTable() {
+ 
+        
+        
     }
 }

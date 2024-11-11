@@ -2,11 +2,11 @@ package view;
 
 import controller.ControllerHub;
 import javax.swing.JLabel;
-import model.User;
+import model.Investidor;
 public class HubFrame extends javax.swing.JFrame {
 
 
-    public HubFrame(User user) {
+    public HubFrame(Investidor user) {
         initComponents();
         this.ch = new ControllerHub(this, user);
     }
@@ -878,7 +878,7 @@ public class HubFrame extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Moeda", "Cotação", "Taxa de Venda", "Taxa de Compra", "Valor Investido", "Qtd. Adquirida"
+                "Moeda", "Cotação", "Taxa de Compra", "Taxa de Venda", "Valor", "Qtd. Adquirida"
             }
         ) {
             Class[] types = new Class [] {
