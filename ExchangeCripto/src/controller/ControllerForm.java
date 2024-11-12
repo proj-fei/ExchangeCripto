@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import DAO.Conexao;
 import DAO.CurrencyDao;
+import DAO.ExtratoDao;
 import DAO.UserDao;
 import DAO.WalletDao;
 import java.awt.Choice;
@@ -93,17 +94,28 @@ public class ControllerForm {
             // Atualizando o valor de Saldo
             wallet.setBalance(novoSaldo);
             hbView.getjLabelSaldo().setText("R$ " + novoSaldo.toString());
+            
+            ExtratoDao exDao = new ExtratoDao(conn);
+            exDao.saveTransaction(
+                    wallet,
+                    0,
+                    "+",
+                    value,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO
+            );
+            
             JOptionPane.showMessageDialog(
                 ffView, 
                 "Depósito Efetuado!",
                 "Aviso",
                 JOptionPane.INFORMATION_MESSAGE
             );
-            ffView.setVisible(false);
+            ffView.dispose();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffView, 
-                "Erro de Conexão: ",
+                "Erro de Conexão: " + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -124,7 +136,7 @@ public class ControllerForm {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                 ffView, 
-                "Digite um Valor Válido!" + e.getMessage(),
+                "Digite um Valor Válido!",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -177,6 +189,17 @@ public class ControllerForm {
             
             // Atualizando o valor de Saldo
             wallet.setBalance(novoSaldo);
+            
+            ExtratoDao exDao = new ExtratoDao(conn);
+            exDao.saveTransaction(
+                    wallet,
+                    0,
+                    "-",
+                    value,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO
+            );
+            
             hbView.getjLabelSaldo().setText("R$ " + novoSaldo.toString());
             JOptionPane.showMessageDialog(
                 ffView, 
@@ -184,7 +207,7 @@ public class ControllerForm {
                 "Aviso",
                 JOptionPane.INFORMATION_MESSAGE
             );
-            ffView.setVisible(false);
+            ffView.dispose();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffView, 
@@ -284,6 +307,17 @@ public class ControllerForm {
                     cripto.getBalance()
             );
 
+            // Salvando Extrato da Operação
+            ExtratoDao exDao = new ExtratoDao(conn);
+            exDao.saveTransaction(
+                    wallet,
+                    cripto.getId(),
+                    "+",
+                    valorFinal,
+                    taxa,
+                    cripto.getCotacao()
+            );
+            
             // Atualizando Hub Page
             hbView.getCh().populateHomePageData();
             JOptionPane.showMessageDialog(
@@ -393,6 +427,16 @@ public class ControllerForm {
                     cripto.getBalance()
             );
 
+            // Salvando Extrato da Operação
+            ExtratoDao exDao = new ExtratoDao(conn);
+            exDao.saveTransaction(
+                    wallet,
+                    cripto.getId(),
+                    "-",
+                    value,
+                    taxa,
+                    cripto.getCotacao()
+            );
             hbView.getCh().populateHomePageData();                    
             JOptionPane.showMessageDialog(
                 ffCriptoView, 

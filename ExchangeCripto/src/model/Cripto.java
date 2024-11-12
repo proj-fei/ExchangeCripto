@@ -14,14 +14,17 @@ public class Cripto extends Moeda implements Tarifa, Cotacao{
         this.cotacao = cotacao;
     }
     
+    @Override
     public double getTaxCompra() {
         return taxCompra;
     }
 
+    @Override
     public double getTaxVenda() {
         return taxVenda;
     }
     
+    @Override
     public BigDecimal getCotacao() {
         return cotacao;
     }

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import model.Investidor;
 import model.Wallet;
-import DAO.WalletDao;
 
 public class UserDao {
     private Connection conn;

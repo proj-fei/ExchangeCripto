@@ -35,13 +35,17 @@ CREATE TABLE wallet_currency_balances (
 );
 
 CREATE TABLE extracts (
-    id SERIAL PRIMARY KEY,                              -- Identificador único gerado automaticamente
+    id SERIAL PRIMARY KEY,                             -- Identificador único gerado automaticamente
     operation VARCHAR(50) NOT NULL,                    -- Operação
     value NUMERIC(15, 6) NOT NULL,                     -- Valor da operação
+    btc NUMERIC(15, 6) NOT NULL,                       -- Saldo de Bitcoin
+    eth NUMERIC(15, 6) NOT NULL,                       -- Saldo de Ethereum
+    xrp NUMERIC(15, 6) NOT NULL,                       -- Saldo de Ripple
+    real NUMERIC(15, 6) NOT NULL,                      -- Saldo de Real
     tax NUMERIC(15, 2),                                -- Taxa associada à operação
     quotation NUMERIC(15, 6),                          -- Cotação da moeda no momento da operação
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          -- Data e hora da operação
-    currencyId INTEGER NOT NULL,                        -- Chave estrangeira para Currency
+    currencyId INTEGER,                                -- Chave estrangeira para Currency
     walletId INTEGER NOT NULL,                          -- Chave estrangeira para Wallets
     CONSTRAINT fk_currency_extract FOREIGN KEY (currencyId) REFERENCES currency(id) ON DELETE CASCADE,   -- Se a moeda for excluída, o extrato será excluído
     CONSTRAINT fk_wallet_extract FOREIGN KEY (walletId) REFERENCES wallets(id) ON DELETE CASCADE         -- Se a wallet for excluída, o extrato será excluído
