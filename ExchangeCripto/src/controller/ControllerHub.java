@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import model.Investidor;
 import model.Wallet;
 import view.FormCriptoFrame;
@@ -19,7 +21,7 @@ public class ControllerHub {
         this.populateHomePageData();
     }
     
-    public void populateHomePageData(){
+    public final void populateHomePageData(){
         view.getjLabelWelcome().setText("bem-vindo(a) " + user.getName() + "!");
         view.getjLabelCPF().setText(user.getCpf());
         
@@ -33,6 +35,8 @@ public class ControllerHub {
         view.getjLabelBTCquote().setText("Cotação: " + wallet.getBTCQuote());
         view.getjLabelETHquote().setText("Cotação: " + wallet.getETHQuote());
         view.getjLabelXRPquote().setText("Cotação: " + wallet.getXRPQuote());
+        
+        this.updateCriptoTable();
     }
     
     public void callAction(int num,String title, String subTitle, String btnText){
@@ -49,8 +53,13 @@ public class ControllerHub {
     }
     
     public void updateCriptoTable() {
- 
+        DefaultTableModel modelo = (DefaultTableModel) view.getjTableCriptos().getModel();
+        modelo.setRowCount(0);
         
+        ArrayList<Object[]> moedas = wallet.getCriptoData();
         
+        for (Object[] linha : moedas) {
+            modelo.addRow(linha);
+        }
     }
 }

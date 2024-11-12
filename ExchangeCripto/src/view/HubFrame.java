@@ -2,6 +2,7 @@ package view;
 
 import controller.ControllerHub;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import model.Investidor;
 public class HubFrame extends javax.swing.JFrame {
 
@@ -62,8 +63,10 @@ public class HubFrame extends javax.swing.JFrame {
     public ControllerHub getCh() {
         return ch;
     }
-    
-    
+
+    public JTable getjTableCriptos() {
+        return jTableCriptos;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -611,7 +614,7 @@ public class HubFrame extends javax.swing.JFrame {
         jLabelBTCquote.setForeground(new java.awt.Color(0, 0, 0));
         jLabelBTCquote.setText("Cotação: 0.00");
 
-        jLabelBTCsaldo.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelBTCsaldo.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabelBTCsaldo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelBTCsaldo.setText("0.00");
 
@@ -650,7 +653,7 @@ public class HubFrame extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(36, 25, 19));
         jLabel22.setText("Ethereum");
 
-        jLabelETHsaldo.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelETHsaldo.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabelETHsaldo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelETHsaldo.setText("0.00");
 
@@ -689,7 +692,7 @@ public class HubFrame extends javax.swing.JFrame {
         jLabelOther.setForeground(new java.awt.Color(36, 25, 19));
         jLabelOther.setText("Outras Moedas");
 
-        jLabelOtherSaldo.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelOtherSaldo.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabelOtherSaldo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelOtherSaldo.setText("0.00");
 
@@ -749,7 +752,7 @@ public class HubFrame extends javax.swing.JFrame {
         jLabel24.setForeground(new java.awt.Color(36, 25, 19));
         jLabel24.setText("Ripple");
 
-        jLabelXRPsaldo.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelXRPsaldo.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabelXRPsaldo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelXRPsaldo.setText("0.00");
 
@@ -872,20 +875,20 @@ public class HubFrame extends javax.swing.JFrame {
         jTableCriptos.setForeground(new java.awt.Color(0, 0, 0));
         jTableCriptos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Moeda", "Cotação", "Taxa de Compra", "Taxa de Venda", "Valor", "Qtd. Adquirida"
+                "Moeda", "Sigla", "Cotação", "Taxa de Compra", "Taxa de Venda", "Valor (R$)", "Valor (Moeda)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -930,12 +933,12 @@ public class HubFrame extends javax.swing.JFrame {
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel28Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jSeparator5)
-                    .addGroup(jPanel28Layout.createSequentialGroup()
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jBtnBuyCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnSellCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -959,7 +962,7 @@ public class HubFrame extends javax.swing.JFrame {
                 .addComponent(jBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         jBtnSaque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/2.png"))); // NOI18N
@@ -989,12 +992,12 @@ public class HubFrame extends javax.swing.JFrame {
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jBtnSaque)
                     .addComponent(jBtnExtrato)
                     .addComponent(jBtnDeposito))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );

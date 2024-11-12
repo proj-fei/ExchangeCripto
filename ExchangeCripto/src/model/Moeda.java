@@ -47,6 +47,10 @@ public abstract class Moeda {
     public abstract BigDecimal calcularCriptoToReal(BigDecimal value);
     public abstract BigDecimal taxarCompra(BigDecimal value);
     public abstract BigDecimal taxarVenda(BigDecimal value);
+    public abstract BigDecimal getCotacao();
+    public abstract double getTaxCompra();
+    public abstract double getTaxVenda();
+    
 }
 
 // As classe de Bitcoin, Ehtereum e Ripple mantém a mesma estrutura de Moeda e não possuem diferença, já que no projeto

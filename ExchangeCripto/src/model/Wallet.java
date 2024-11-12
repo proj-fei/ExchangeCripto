@@ -95,22 +95,30 @@ public class Wallet {
         return criptos;
     }
     
+    public ArrayList<Object[]> getCriptoData() {
+        ArrayList<Object[]> criptoData = new ArrayList<>();
+        ArrayList<Moeda> temp_criptos = new ArrayList<>();
+        temp_criptos.add(bitcoin);
+        temp_criptos.add(ethereum);
+        temp_criptos.add(ripple);
+        temp_criptos.addAll(criptos);
+        
+        for (Moeda c : temp_criptos){
+            Object[] linha = {
+                c.getName(),
+                c.getAcronym(),
+                c.getCotacao(),
+                String.format("%,2f%%", c.getTaxCompra()),
+                String.format("%,2f%%", c.getTaxVenda()),
+                "R$ " + c.calcularCriptoToReal(c.getBalance()).setScale(2),
+                c.getBalance().setScale(5, BigDecimal.ROUND_HALF_UP) + " " + c.getAcronym()
+                
+            };
+            criptoData.add(linha);
+        }
+        return criptoData;
+    }
     
 }
 
-//    public ArrayList<Object[]> getCriptoData() {
-//        ArrayList<Object[]> criptoData = new ArrayList<>();
-//        for (Moeda c : criptos){
-//            Object[] linha = {
-//                c.getName(),
-//                c.getQuotation(),
-//                c.getTaxCompra(),
-//                c.getTaxVenda(),
-//                c.getBalance().multiply(c.getQuotation()),
-//                c.getBalance()
-//            };
-//            criptoData.add(linha);
-//        }
-//        return criptoData;
-//    }
 
