@@ -3,23 +3,37 @@ import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class Wallet {
     private int id;
     private BigDecimal balance;
-    private ArrayList<Moeda> criptos = new ArrayList<>(); // 0 = BTC, 1 = ETH, 2 = XRP, ... = novas moedas
+    private Bitcoin bitcoin;
+    private Ethereum ethereum;
+    private Ripple ripple;
+    private ArrayList<Cripto> criptos = new ArrayList<>(); 
 
-    public Wallet(int id, BigDecimal balance, ArrayList<Moeda> currencies) {
+    public Wallet(int id, BigDecimal balance, Bitcoin bitcoin, Ethereum ethereum, Ripple ripple, ArrayList<Cripto> criptos) {
         this.id = id;
         this.balance = balance;
-        currencies.sort(Comparator.comparing(Moeda::getName));
-        this.criptos = currencies;
+        this.bitcoin = bitcoin;
+        this.ethereum = ethereum;
+        this.ripple = ripple;
+        this.criptos = criptos;
     }
     
     public Moeda getCriptoByName(String name) {
-        for (Moeda cripto : criptos) {
-            if (cripto.getName().equalsIgnoreCase(name)) {
-                return cripto;
+        if(name.equalsIgnoreCase(bitcoin.getName())) {
+            return bitcoin;
+        } else if (name.equalsIgnoreCase(ethereum.getName())){
+            return ethereum;
+        } else if (name.equalsIgnoreCase(ripple.getName())) {
+            return ripple;
+        } else {
+            for(Moeda cripto : this.criptos) {
+                if  (name.equalsIgnoreCase(cripto.getName())) {
+                    return cripto;
+                }
             }
         }
         return null;
@@ -39,37 +53,37 @@ public class Wallet {
     
     // Coleta o saldo do bitcoin diretamente na arraylist pelo seu index
     public BigDecimal getBTCBalance() {
-        return criptos.get(0).getBalance();
+        return bitcoin.getBalance();
     }
     
     // Coleta o saldo do ethereum diretamente na arraylist pelo seu index
     public BigDecimal getETHBalance() {
-        return criptos.get(1).getBalance();
+        return ethereum.getBalance();
     }
         
     // Coleta o saldo do ripple diretamente na arraylist pelo seu index
     public BigDecimal getXRPBalance() {
-        return criptos.get(2).getBalance();
+        return ripple.getBalance();
     }
     
     // Função generica de coleta de saldo para demais moedas
-    public BigDecimal getGenericCoinBalance(int index) {
+    public BigDecimal getGenericCriptoBalance(int index) {
         return criptos.get(index).getBalance();
     }
    
     // Coleta de cotação do bitcoin diretamente na arraylist pelo seu index
     public BigDecimal getBTCQuote() {
-        return criptos.get(0).getBalance();
+        return bitcoin.getCotacao();
     }
     
     // Coleta de cotação do ethereum diretamente na arraylist pelo seu index
     public BigDecimal getETHQuote() {
-        return criptos.get(1).getBalance();
+        return ethereum.getCotacao();
     }
         
     // Coleta de cotação do ripple diretamente na arraylist pelo seu index
     public BigDecimal getXRPQuote() {
-        return criptos.get(2).getBalance();
+        return ripple.getCotacao();
     }
     
     // Coleta generia de cotação para demais moedas
@@ -77,23 +91,26 @@ public class Wallet {
         return criptos.get(index).getBalance();
     }
 
-    public ArrayList<Moeda> getCriptos() {
+    public ArrayList<Cripto> getCriptos() {
         return criptos;
     }
     
-    public ArrayList<Object[]> getCriptoData() {
-        ArrayList<Object[]> criptoData = new ArrayList<>();
-        for (Moeda c : criptos){
-            Object[] linha = {
-                c.getName(),
-                c.getQuotation(),
-                c.getTaxCompra(),
-                c.getTaxVenda(),
-                c.getBalance().multiply(c.getQuotation()),
-                c.getBalance()
-            };
-            criptoData.add(linha);
-        }
-        return criptoData;
-    }
+    
 }
+
+//    public ArrayList<Object[]> getCriptoData() {
+//        ArrayList<Object[]> criptoData = new ArrayList<>();
+//        for (Moeda c : criptos){
+//            Object[] linha = {
+//                c.getName(),
+//                c.getQuotation(),
+//                c.getTaxCompra(),
+//                c.getTaxVenda(),
+//                c.getBalance().multiply(c.getQuotation()),
+//                c.getBalance()
+//            };
+//            criptoData.add(linha);
+//        }
+//        return criptoData;
+//    }
+

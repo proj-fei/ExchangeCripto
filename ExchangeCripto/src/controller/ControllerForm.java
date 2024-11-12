@@ -11,6 +11,7 @@ import DAO.WalletDao;
 import java.awt.Choice;
 import model.Moeda;
 import model.Investidor;
+import model.Wallet;
 import view.FormCriptoFrame;
 import view.FormFrame;
 import view.HubFrame;
@@ -22,12 +23,14 @@ public class ControllerForm {
     private HubFrame hbView;
     private String function;
     private Investidor user;
+    private Wallet wallet;
 
     public ControllerForm(FormFrame view, String title, Investidor user, HubFrame hbView) {
         this.ffView = view;
         this.function = title;
         this.user = user;
         this.hbView = hbView;
+        this.wallet = user.getWallet();
     }
 
     public ControllerForm(FormCriptoFrame ffCriptoView, String function, Investidor user, HubFrame hbView) {
@@ -35,10 +38,12 @@ public class ControllerForm {
         this.hbView = hbView;
         this.function = function;
         this.user = user;
+        this.wallet = user.getWallet();
         
         selector = ffCriptoView.getjSelectCriptos();
         selector.removeAll();
-        for(Moeda coin : user.getWallet().getCriptos()) {
+        for(Moeda moeda : wallet.getCriptos()) {
+        
         }
         selector.add("Bitcoin");
         selector.add("Ethereum");
@@ -47,18 +52,10 @@ public class ControllerForm {
     
     public void action(){
         switch (function) {
-            case "Depósito":
-                this.deposito();
-                break;
-            case "Saque":
-                this.saque();
-                break;
-            case "Comprar Cripto":
-                this.comprarCripto();
-                break;
-            case "Vender Cripto":
-                this.venderCripto();
-                break;
+            case "Depósito" -> this.deposito();
+            case "Saque" -> this.saque();
+            case "Comprar Cripto" -> this.comprarCripto();
+            case "Vender Cripto" -> this.venderCripto();
         }
     }
     
@@ -89,12 +86,12 @@ public class ControllerForm {
             
             // Realizar Depósito
             WalletDao wDao = new WalletDao(conn);
-            BigDecimal saldoAtual = wDao.getSaldo(user.getWallet().getId());
+            BigDecimal saldoAtual = wDao.getSaldo(wallet.getId());
             BigDecimal novoSaldo = saldoAtual.add(value);
-            wDao.setBalance(user.getWallet().getId(),novoSaldo);
+            wDao.setBalance(wallet.getId(),novoSaldo);
             
             // Atualizando o valor de Saldo
-            user.getWallet().setBalance(novoSaldo);
+            wallet.setBalance(novoSaldo);
             hbView.getjLabelSaldo().setText("R$ " + novoSaldo.toString());
             JOptionPane.showMessageDialog(
                 ffView, 
@@ -168,18 +165,18 @@ public class ControllerForm {
             if (value.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("O Valor deve ser positivo.");
             }
-            if (value.compareTo(user.getWallet().getBalance()) >= 0) {
+            if (value.compareTo(wallet.getBalance()) >= 0) {
                 throw new IllegalArgumentException("O Valor é inválido.");
             }
             
             // Realizar Depósito
             WalletDao wDao = new WalletDao(conn);
-            BigDecimal saldoAtual = wDao.getSaldo(user.getWallet().getId());
+            BigDecimal saldoAtual = wDao.getSaldo(wallet.getId());
             BigDecimal novoSaldo = saldoAtual.subtract(value);
-            wDao.setBalance(user.getWallet().getId(),novoSaldo);
+            wDao.setBalance(wallet.getId(),novoSaldo);
             
             // Atualizando o valor de Saldo
-            user.getWallet().setBalance(novoSaldo);
+            wallet.setBalance(novoSaldo);
             hbView.getjLabelSaldo().setText("R$ " + novoSaldo.toString());
             JOptionPane.showMessageDialog(
                 ffView, 
@@ -248,57 +245,55 @@ public class ControllerForm {
                 throw new Exception("Senha Inválida.");
             }
 
-            
             // Obetendo e validado valor
             BigDecimal value = new BigDecimal(ffCriptoView.getjTxtInput().getText());
             if (value.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("O Valor deve ser positivo.");
             }
-            if (value.compareTo(user.getWallet().getBalance()) >= 0) {
-                throw new IllegalArgumentException("O Valor é inválido.");
+            if (value.compareTo(wallet.getBalance()) > 0) {
+                throw new IllegalArgumentException("Saldo Insuficiente.");
             }
+
             
             // Obetendo e validado cripto
-            int indexCripto = selector.getSelectedIndex();
-            Moeda cripto = user.getWallet().getCriptos().get(indexCripto);
+            String name = selector.getSelectedItem();
+            Moeda cripto = wallet.getCriptoByName(name);
             if (cripto == null) {
                 throw new Exception("Cripto Moeda não encontrada.");
             }
             
-            
-            // Salvar Saldo de Cripto
+            // Salvando novo Saldo da Carteira (R$)
+            BigDecimal novoSaldo = wallet.getBalance().subtract(value);
+            wallet.setBalance(novoSaldo);
+       
+            // Operação da Cripto
+            BigDecimal qtdCripto = cripto.calcularRealToCripto(value);
+            BigDecimal taxa = cripto.taxarCompra(qtdCripto);
+            BigDecimal valorFinal = qtdCripto.subtract(taxa);
+            cripto.setBalance(valorFinal.add(cripto.getBalance()));
+
+            // Criado DAO
             CurrencyDao cDao = new CurrencyDao(conn);
-            BigDecimal qtdComprada = value.divide(cripto.getQuotation(), 6, BigDecimal.ROUND_HALF_UP);
-            BigDecimal criptoSaldoAtual = cDao.getCurrencyBalance(user.getWallet().getId(), cripto.getId());
-            BigDecimal novoCriptoSaldo = criptoSaldoAtual.add(qtdComprada);
-            BigDecimal taxa = novoCriptoSaldo.multiply(BigDecimal.valueOf(cripto.getTaxCompra())).divide(BigDecimal.valueOf(100));
-            BigDecimal valorFinal = novoCriptoSaldo.subtract(taxa);
-            cripto.setBalance(valorFinal);
-            
-            cDao.updateCurrency(
-                user.getWallet().getId(),
-              cripto.getId(), 
-                  valorFinal
-            );
-            
-            
-            // Realizar Alteração de Saldo
             WalletDao wDao = new WalletDao(conn);
-            BigDecimal saldoAtual = wDao.getSaldo(user.getWallet().getId());
-            BigDecimal novoSaldo = saldoAtual.subtract(value);
-            wDao.setBalance(user.getWallet().getId(),novoSaldo);
             
-            // Atualizando o valor de Saldo
-            user.getWallet().setBalance(novoSaldo);
+            // Salvando mudanças no banco de dados
+            wDao.setBalance(user.getWallet().getId(),novoSaldo);
+            cDao.updateCurrency(
+                    wallet.getId(), 
+                    cripto.getId(), 
+                    cripto.getBalance()
+            );
+
+            // Atualizando Hub Page
             hbView.getCh().populateHomePageData();
-                    
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
                 "Compra de " + cripto.getName() + " Efetuada!",
                 "Aviso",
                 JOptionPane.INFORMATION_MESSAGE
             );
-            ffCriptoView.setVisible(false);
+            // Fechando Janela
+            ffCriptoView.dispose();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
@@ -323,7 +318,7 @@ public class ControllerForm {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
-                "Digite um Valor Válido!",
+                "Ocorreu um erro inesperado.",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -364,49 +359,48 @@ public class ControllerForm {
             if (value.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("O Valor deve ser positivo.");
             }
-            
+                        
             // Obetendo e validado cripto
-            int indexCripto = selector.getSelectedIndex();
-            Moeda cripto = user.getWallet().getCriptos().get(indexCripto);
+            String name = selector.getSelectedItem();
+            Moeda cripto = wallet.getCriptoByName(name);
             if (cripto == null) {
                 throw new Exception("Cripto Moeda não encontrada.");
             }
             if (value.compareTo(cripto.getBalance()) >= 0) {
                 throw new IllegalArgumentException("O Valor é inválido.");
-            }
-            
-            CurrencyDao cDao = new CurrencyDao(conn);
-            BigDecimal qtdVendida = value.multiply(cripto.getQuotation());
-            BigDecimal criptoSaldoAtual = cDao.getCurrencyBalance(user.getWallet().getId(), cripto.getId());
-            BigDecimal novoCriptoSaldo = criptoSaldoAtual.subtract(qtdVendida);
-            BigDecimal taxa = qtdVendida.multiply(BigDecimal.valueOf(cripto.getTaxVenda())).divide(BigDecimal.valueOf(100));
+            }            
+           
+            // Operação de venda da Cripto
+            BigDecimal qtdVendida = cripto.calcularCriptoToReal(value);
+            BigDecimal taxa = cripto.taxarVenda(qtdVendida);
             BigDecimal valorFinal = qtdVendida.subtract(taxa);
-            cripto.setBalance(novoCriptoSaldo);
+            wallet.setBalance(valorFinal.add(wallet.getBalance()));
+
             
-            cDao.updateCurrency(
-                user.getWallet().getId(),
-              cripto.getId(), 
-                  novoCriptoSaldo
-            );
+            // Salvando novo Saldo da Cripto            
+            BigDecimal novoSaldoCripto = cripto.getBalance().subtract(value);
+            cripto.setBalance(novoSaldoCripto);
             
-            
-            // Realizar Alteração de Saldo
+            // Criado DAO
+            CurrencyDao cDao = new CurrencyDao(conn);
             WalletDao wDao = new WalletDao(conn);
-            BigDecimal saldoAtual = wDao.getSaldo(user.getWallet().getId());
-            BigDecimal novoSaldo = saldoAtual.subtract(valorFinal);
-            wDao.setBalance(user.getWallet().getId(),novoSaldo);
             
-            // Atualizando o valor de Saldo
-            user.getWallet().setBalance(novoSaldo);
-            hbView.getCh().populateHomePageData();
-                    
+            // Salvando mudanças no banco de dados
+            wDao.setBalance(user.getWallet().getId(),wallet.getBalance());
+            cDao.updateCurrency(
+                    wallet.getId(), 
+                    cripto.getId(), 
+                    cripto.getBalance()
+            );
+
+            hbView.getCh().populateHomePageData();                    
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
                 "Venda de " + cripto.getName() + " Efetuada!",
                 "Aviso",
                 JOptionPane.INFORMATION_MESSAGE
             );
-            ffCriptoView.setVisible(false);
+            ffCriptoView.dispose();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffCriptoView, 

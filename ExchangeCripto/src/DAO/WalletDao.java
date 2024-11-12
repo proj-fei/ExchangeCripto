@@ -6,7 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
+import model.Bitcoin;
+import model.Cripto;
+import model.Ethereum;
 import model.Moeda;
+import model.Ripple;
 import model.Wallet;
 
 
@@ -61,10 +66,36 @@ public class WalletDao {
         ArrayList<Moeda> currencies = new ArrayList<>();
         CurrencyDao cDao = new CurrencyDao(this.conn);
         currencies = cDao.getCurrencyByWallet(walletId);
+        
+        Bitcoin btc = null;
+        Ethereum eth = null;
+        Ripple xrp = null;
+        ArrayList<Cripto> criptos = new ArrayList<>();
+        Iterator<Moeda> iterator = currencies.iterator();
+        while (iterator.hasNext()) {
+            Moeda moeda = iterator.next();
+           
+            if (moeda instanceof Bitcoin bitcoin) {
+                btc = bitcoin;
+                iterator.remove();
+            } else if (moeda instanceof Ethereum ethereum) {
+                eth = ethereum;
+                iterator.remove();
+            } else if (moeda instanceof Ripple ripple) {
+                xrp = ripple;
+                iterator.remove();
+            } else if (moeda instanceof Cripto cripto) {
+                criptos.add(cripto);
+            }
+            
+        }
         Wallet wallet = new Wallet(
             res.getInt("id"),
             res.getBigDecimal("balance"),
-            currencies
+            btc,
+            eth,
+            xrp,
+            criptos
         );
         
         res.close();

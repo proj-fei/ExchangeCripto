@@ -21,8 +21,8 @@ CREATE TABLE currency (
     name VARCHAR(50) NOT NULL,                         -- Nome da moeda (ex: BTC, ETH, XRP)
     acronym VARCHAR(10) NOT NULL,                      -- Sigla da moeda (ex: BTC, ETH, XRP)
     quotation NUMERIC(15, 6) NOT NULL,                 -- Cotação da moeda
-    taxC INTEGER NOT NULL,                             -- Taxa de compra
-    taxV INTEGER NOT NULL                              -- Taxa de venda
+    taxC DOUBLE PRECISION NOT NULL,                     -- Taxa de compra
+    taxV DOUBLE PRECISION NOT NULL                      -- Taxa de venda
 );
 
 CREATE TABLE wallet_currency_balances (

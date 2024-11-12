@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import model.Bitcoin;
+import model.BuilderCripto;
 import model.Moeda;
 
 
@@ -52,6 +55,7 @@ public class CurrencyDao {
         while (res.next()) {
             int currencyId = res.getInt("currencyid");
             BigDecimal balance = res.getBigDecimal("balance");
+            
             Moeda coinDetails = getCurrencyById(currencyId);
             coinDetails.setBalance(balance);
             currencies.add(coinDetails);
@@ -73,10 +77,22 @@ public class CurrencyDao {
             String name = res.getString("name");
             String acronym = res.getString("acronym");
             BigDecimal quote = res.getBigDecimal("quotation");
-            int taxV = res.getInt("taxv");
-            int taxC = res.getInt("taxc");
+            double taxV = res.getDouble("taxv");
+            double taxC = res.getDouble("taxc");
             
-            currency = new Moeda(id, taxV, taxC, name, acronym, quote, BigDecimal.ZERO);
+            // Cria um Construtor Genérico de Cripto Moedas e que Cria o 
+            // Objeto da Moeda Específica
+            BuilderCripto builder = new BuilderCripto();
+            builder.build(
+                    id, 
+                    name, 
+                    acronym, 
+                    BigDecimal.ZERO,
+                    quote, 
+                    taxC, 
+                    taxV
+            );
+            currency = builder.gerResultado();
         }
         
         res.close();
