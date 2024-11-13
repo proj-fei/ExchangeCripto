@@ -5,6 +5,13 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import model.Moeda;
 import model.Wallet;
 
 /**
@@ -49,5 +56,53 @@ public class ExtratoDao {
         
         // Data é definida diretamente pelo bannco
         conn.close();
+    }
+    
+    public ArrayList<Object[]> getExtrato(int walletId) throws SQLException {
+        String sql = "SELECT * FROM extracts WHERE walletid = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, walletId);
+        ResultSet res = statement.executeQuery();
+        
+        ArrayList<Object[]> transactions = new ArrayList<>();
+        CurrencyDao cDao = new CurrencyDao(this.conn);
+        
+        while (res.next()) {
+            Moeda moeda = cDao.getCurrencyById(res.getInt("currencyid"));
+            
+            BigDecimal value = res
+                .getBigDecimal("value")
+                .stripTrailingZeros()
+                .setScale(2, BigDecimal.ROUND_HALF_UP);
+                          
+            String valueMsg = " " + res.getString("operation") + " " + value;
+            
+            if (res.getInt("currencyid") == 0 ) {
+                valueMsg += " Real";
+            } else {
+                valueMsg += " " + moeda.getAcronym();
+            }
+            
+            Timestamp timestamp = res.getTimestamp("date");
+            LocalDate date = timestamp.toLocalDateTime().toLocalDate();
+            LocalTime time = timestamp.toLocalDateTime().toLocalTime().withSecond(0).withNano(0);
+            
+            String formattedTime = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+            
+            Object[] linha = {
+                date,
+                formattedTime,
+                valueMsg,
+                res.getBigDecimal("quotation").stripTrailingZeros().setScale(2, BigDecimal.ROUND_HALF_UP),
+                res.getBigDecimal("tax").stripTrailingZeros().setScale(2, BigDecimal.ROUND_HALF_UP),
+                res.getBigDecimal("real").stripTrailingZeros().setScale(2, BigDecimal.ROUND_HALF_UP),
+                res.getBigDecimal("btc").stripTrailingZeros().setScale(6, BigDecimal.ROUND_HALF_UP),
+                res.getBigDecimal("eth").stripTrailingZeros().setScale(6, BigDecimal.ROUND_HALF_UP),
+                res.getBigDecimal("xrp").stripTrailingZeros().setScale(6, BigDecimal.ROUND_HALF_UP),
+            };
+            
+            transactions.add(linha);
+        }
+        return transactions;
     }
 }

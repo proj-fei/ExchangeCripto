@@ -10,6 +10,7 @@ import java.util.Iterator;
 import model.Bitcoin;
 import model.Cripto;
 import model.Ethereum;
+import model.Extrato;
 import model.Moeda;
 import model.Ripple;
 import model.Wallet;
@@ -97,6 +98,10 @@ public class WalletDao {
             xrp,
             criptos
         );
+        
+        Extrato extrato = new Extrato(wallet);
+        extrato.updateExtrato();
+        wallet.setExtrato(extrato);
         
         res.close();
         statement.close();

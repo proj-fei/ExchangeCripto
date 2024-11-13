@@ -104,6 +104,7 @@ public class ControllerForm {
                     BigDecimal.ZERO,
                     BigDecimal.ZERO
             );
+            wallet.getExtrato().updateExtrato();
             
             JOptionPane.showMessageDialog(
                 ffView, 
@@ -199,6 +200,7 @@ public class ControllerForm {
                     BigDecimal.ZERO,
                     BigDecimal.ZERO
             );
+            wallet.getExtrato().updateExtrato();
             
             hbView.getjLabelSaldo().setText("R$ " + novoSaldo.toString());
             JOptionPane.showMessageDialog(
@@ -317,6 +319,7 @@ public class ControllerForm {
                     taxa,
                     cripto.getCotacao()
             );
+            wallet.getExtrato().updateExtrato();
             
             // Atualizando Hub Page
             hbView.getCh().populateHomePageData();
@@ -437,6 +440,8 @@ public class ControllerForm {
                     taxa,
                     cripto.getCotacao()
             );
+            wallet.getExtrato().updateExtrato();
+            
             hbView.getCh().populateHomePageData();                    
             JOptionPane.showMessageDialog(
                 ffCriptoView, 

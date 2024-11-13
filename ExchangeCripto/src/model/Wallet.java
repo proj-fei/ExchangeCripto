@@ -12,6 +12,7 @@ public class Wallet {
     private Ethereum ethereum;
     private Ripple ripple;
     private ArrayList<Cripto> criptos = new ArrayList<>(); 
+    private Extrato extrato;
 
     public Wallet(int id, BigDecimal balance, Bitcoin bitcoin, Ethereum ethereum, Ripple ripple, ArrayList<Cripto> criptos) {
         this.id = id;
@@ -20,6 +21,8 @@ public class Wallet {
         this.ethereum = ethereum;
         this.ripple = ripple;
         this.criptos = criptos;
+        
+        this.extrato = new Extrato(this);
     }
     
     public Moeda getCriptoByName(String name) {
@@ -93,6 +96,14 @@ public class Wallet {
 
     public ArrayList<Cripto> getCriptos() {
         return criptos;
+    }
+
+    public Extrato getExtrato() {
+        return extrato;
+    }
+    
+    public void setExtrato(Extrato extrato) {
+        this.extrato = extrato;
     }
     
     public ArrayList<Object[]> getCriptoData() {

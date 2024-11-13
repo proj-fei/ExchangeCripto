@@ -974,6 +974,11 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnExtrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/3.png"))); // NOI18N
         jBtnExtrato.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
         jBtnExtrato.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnExtrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExtratoActionPerformed(evt);
+            }
+        });
 
         jBtnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/1.png"))); // NOI18N
         jBtnDeposito.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
@@ -1155,6 +1160,10 @@ public class HubFrame extends javax.swing.JFrame {
     private void jBtnSellCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSellCriptoActionPerformed
         ch.callAction(2,"Vender Cripto", "Valor:", "Vender");
     }//GEN-LAST:event_jBtnSellCriptoActionPerformed
+
+    private void jBtnExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtratoActionPerformed
+        ch.callAction(3,"", "", "");
+    }//GEN-LAST:event_jBtnExtratoActionPerformed
 
     /**
      * @param args the command line arguments
