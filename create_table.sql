@@ -6,7 +6,7 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,                        -- Nome do usuário
     cpf VARCHAR(11) NOT NULL UNIQUE,                   -- CPF (único)
     password VARCHAR(255) NOT NULL,                    -- Senha
-    isAdmin BOOLEAN DEFAULT FALSE                       -- Admin (booleano)
+    isAdmin SMALLINT DEFAULT 0                         -- Admin 0 = False, 1 = True
 );
 
 CREATE TABLE wallets (
@@ -19,9 +19,10 @@ CREATE TABLE wallets (
 CREATE TABLE currency (
     id SERIAL PRIMARY KEY,                              -- Identificador único gerado automaticamente
     name VARCHAR(50) NOT NULL,                         -- Nome da moeda (ex: BTC, ETH, XRP)
+    acronym VARCHAR(10) NOT NULL,                      -- Sigla da moeda (ex: BTC, ETH, XRP)
     quotation NUMERIC(15, 6) NOT NULL,                 -- Cotação da moeda
-    taxC INTEGER NOT NULL,                             -- Taxa de compra
-    taxV INTEGER NOT NULL                              -- Taxa de venda
+    taxC DOUBLE PRECISION NOT NULL,                     -- Taxa de compra
+    taxV DOUBLE PRECISION NOT NULL                      -- Taxa de venda
 );
 
 CREATE TABLE wallet_currency_balances (
@@ -34,14 +35,27 @@ CREATE TABLE wallet_currency_balances (
 );
 
 CREATE TABLE extracts (
-    id SERIAL PRIMARY KEY,                              -- Identificador único gerado automaticamente
+    id SERIAL PRIMARY KEY,                             -- Identificador único gerado automaticamente
     operation VARCHAR(50) NOT NULL,                    -- Operação
     value NUMERIC(15, 6) NOT NULL,                     -- Valor da operação
+    btc NUMERIC(15, 6) NOT NULL,                       -- Saldo de Bitcoin
+    eth NUMERIC(15, 6) NOT NULL,                       -- Saldo de Ethereum
+    xrp NUMERIC(15, 6) NOT NULL,                       -- Saldo de Ripple
+    real NUMERIC(15, 6) NOT NULL,                      -- Saldo de Real
     tax NUMERIC(15, 2),                                -- Taxa associada à operação
     quotation NUMERIC(15, 6),                          -- Cotação da moeda no momento da operação
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          -- Data e hora da operação
-    currencyId INTEGER NOT NULL,                        -- Chave estrangeira para Currency
+    currencyId INTEGER,                                -- Chave estrangeira para Currency
     walletId INTEGER NOT NULL,                          -- Chave estrangeira para Wallets
     CONSTRAINT fk_currency_extract FOREIGN KEY (currencyId) REFERENCES currency(id) ON DELETE CASCADE,   -- Se a moeda for excluída, o extrato será excluído
     CONSTRAINT fk_wallet_extract FOREIGN KEY (walletId) REFERENCES wallets(id) ON DELETE CASCADE         -- Se a wallet for excluída, o extrato será excluído
 );
+
+CREATE TABLE quote_history (
+    id SERIAL PRIMARY KEY,                             -- Identificador único gerado automaticamente
+    value NUMERIC(15, 6) NOT NULL,                     -- Valor da moeda
+    quotation NUMERIC(15, 6),                          -- Cotação da moeda no momento da operação
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          -- Data e hora da operação
+    currencyId INTEGER NOT NULL,                       -- Chave estrangeira para Currency
+    CONSTRAINT fk_currency_extract FOREIGN KEY (currencyId) REFERENCES currency(id) ON DELETE cascade   -- Se a moeda for excluída, o histórico será excluído
+)

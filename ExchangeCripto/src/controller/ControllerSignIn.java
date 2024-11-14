@@ -24,10 +24,26 @@ public class ControllerSignIn {
         String name = view.getjTxtName().getText();
         String password = view.getjTxtPassword().getText();
         
-        if (cpf.isEmpty() || name.isEmpty() || password.isEmpty() || cpf.length() > 11) {
+        if (cpf.isEmpty() || name.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(
                 view, 
-                "Preencha todos os campos corretamente!",
+                "Preencha todos os campos!",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        else if (cpf.length() > 11){
+            JOptionPane.showMessageDialog(
+                view, 
+                "O CPF só pode ter 11 algarismos! sem caracteres",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        else if (password.length() < 5){
+            JOptionPane.showMessageDialog(
+                view, 
+                "A senha precisa ter pelo menos 6 caracteres!",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );

@@ -1,15 +1,45 @@
 package model;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 
 public class Wallet {
     private int id;
     private BigDecimal balance;
-    private ArrayList<Coin> criptos_balance = new ArrayList<>();
+    private Bitcoin bitcoin;
+    private Ethereum ethereum;
+    private Ripple ripple;
+    private ArrayList<Cripto> criptos = new ArrayList<>(); 
+    private Extrato extrato;
 
-    public Wallet(int id, BigDecimal balance) {
+    public Wallet(int id, BigDecimal balance, Bitcoin bitcoin, Ethereum ethereum, Ripple ripple, ArrayList<Cripto> criptos) {
         this.id = id;
         this.balance = balance;
+        this.bitcoin = bitcoin;
+        this.ethereum = ethereum;
+        this.ripple = ripple;
+        this.criptos = criptos;
+        
+        this.extrato = new Extrato(this);
+    }
+    
+    public Moeda getCriptoByName(String name) {
+        if(name.equalsIgnoreCase(bitcoin.getName())) {
+            return bitcoin;
+        } else if (name.equalsIgnoreCase(ethereum.getName())){
+            return ethereum;
+        } else if (name.equalsIgnoreCase(ripple.getName())) {
+            return ripple;
+        } else {
+            for(Moeda cripto : this.criptos) {
+                if  (name.equalsIgnoreCase(cripto.getName())) {
+                    return cripto;
+                }
+            }
+        }
+        return null;
     }
 
     public int getId() {
@@ -23,13 +53,83 @@ public class Wallet {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
-
-    public ArrayList<Coin> getCriptos_balance() {
-        return criptos_balance;
+    
+    // Coleta o saldo do bitcoin diretamente na arraylist pelo seu index
+    public BigDecimal getBTCBalance() {
+        return bitcoin.getBalance();
+    }
+    
+    // Coleta o saldo do ethereum diretamente na arraylist pelo seu index
+    public BigDecimal getETHBalance() {
+        return ethereum.getBalance();
+    }
+        
+    // Coleta o saldo do ripple diretamente na arraylist pelo seu index
+    public BigDecimal getXRPBalance() {
+        return ripple.getBalance();
+    }
+    
+    // Função generica de coleta de saldo para demais moedas
+    public BigDecimal getGenericCriptoBalance(int index) {
+        return criptos.get(index).getBalance();
+    }
+   
+    // Coleta de cotação do bitcoin diretamente na arraylist pelo seu index
+    public BigDecimal getBTCQuote() {
+        return bitcoin.getCotacao();
+    }
+    
+    // Coleta de cotação do ethereum diretamente na arraylist pelo seu index
+    public BigDecimal getETHQuote() {
+        return ethereum.getCotacao();
+    }
+        
+    // Coleta de cotação do ripple diretamente na arraylist pelo seu index
+    public BigDecimal getXRPQuote() {
+        return ripple.getCotacao();
+    }
+    
+    // Coleta generia de cotação para demais moedas
+    public BigDecimal getGenericCoinQuote(int index) {
+        return criptos.get(index).getBalance();
     }
 
-    public void setCriptos_balance(ArrayList<Coin> criptos_balance) {
-        this.criptos_balance = criptos_balance;
+    public ArrayList<Cripto> getCriptos() {
+        return criptos;
+    }
+
+    public Extrato getExtrato() {
+        return extrato;
+    }
+    
+    public void setExtrato(Extrato extrato) {
+        this.extrato = extrato;
+    }
+    
+    public ArrayList<Object[]> getCriptoData() {
+        ArrayList<Object[]> criptoData = new ArrayList<>();
+        ArrayList<Moeda> temp_criptos = new ArrayList<>();
+        temp_criptos.add(bitcoin);
+        temp_criptos.add(ethereum);
+        temp_criptos.add(ripple);
+        temp_criptos.addAll(criptos);
+        
+        for (Moeda c : temp_criptos){
+            Object[] linha = {
+                c.getName(),
+                c.getAcronym(),
+                c.getCotacao(),
+                String.format("%,2f%%", c.getTaxCompra()),
+                String.format("%,2f%%", c.getTaxVenda()),
+                "R$ " + c.calcularCriptoToReal(c.getBalance()).setScale(2),
+                c.getBalance().setScale(5, BigDecimal.ROUND_HALF_UP) + " " + c.getAcronym()
+                
+            };
+            criptoData.add(linha);
+        }
+        return criptoData;
     }
     
 }
+
+

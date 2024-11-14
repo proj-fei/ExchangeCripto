@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import model.User;
+import model.Investidor;
 import model.Wallet;
-import DAO.WalletDao;
 
 public class UserDao {
     private Connection conn;
@@ -18,19 +17,55 @@ public class UserDao {
     // Criar Novo Usuário
     public void createUser(String cpf, String name, String password, int isAdmin) throws SQLException{
         String sql = "INSERT INTO users (name, cpf, password, isadmin) values (?,?,?,?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         
         statement.setString(1, name);
         statement.setString(2, cpf);
         statement.setString(3, password);
         statement.setInt(4, isAdmin);
-        statement.execute();
+        statement.executeUpdate();
         
-        conn.close();
+        if(isAdmin == 0){
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            int userId = 0;
+            
+            if(generatedKeys.next()) {
+                userId = generatedKeys.getInt(1);
+            }
+            
+            statement.close();
+            if(userId == 0){
+                throw new SQLException("ID de Usuário não pode ser 0"); 
+            }
+            
+            WalletDao dao = new WalletDao(conn);
+            dao.createWallet(userId);
+        }
+        else {
+            conn.close();
+        }
     }
     
+    public boolean authPassword(String password, int userId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE id = ? and password = ? ";
+        PreparedStatement statement = conn.prepareStatement(sql);        
+        statement.setInt(1, userId);
+        statement.setString(2, password);
+
+        ResultSet res = statement.executeQuery();
+        if (res.next()){
+            statement.close();
+            res.close();
+            return true;
+        }
+        statement.close();
+        res.close();
+        return false;
+    }
+    
+    
     // Autenticação de Usuário para login
-    public User authUser(String cpf, String password) throws SQLException {
+    public Investidor authUser(String cpf, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE cpf = ? AND password = ? ";
         PreparedStatement statement = conn.prepareStatement(sql);
         
@@ -38,17 +73,15 @@ public class UserDao {
         statement.setString(2, password);
         
         ResultSet res = statement.executeQuery();
-
+        
         if (!res.next()) {
             return null;
         }
-        
-        // Cria e retorna o objeto User com os dados recuperados
-        if(!res.getBoolean("isadmin")){
+        // Cria e retorna o objeto Investidor com os dados recuperados
+        if(res.getInt("isadmin") == 0){
             WalletDao wDao = new WalletDao(this.conn);
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
-            
-            User user = new User(
+            Investidor user = new Investidor(
                 res.getInt("id"),
                 res.getString("cpf"),
                 res.getString("name"),
@@ -56,21 +89,26 @@ public class UserDao {
                 res.getInt("isadmin"),
                 wallet
             );
+            res.close();
+            statement.close();
+            conn.close();
             return user;
         }
-        User user = new User(
+        Investidor user = new Investidor(
             res.getInt("id"),
             res.getString("cpf"),
             res.getString("name"),
             res.getString("password"),
             res.getInt("isadmin")
         );
-        
+        res.close();
+        statement.close();
+        conn.close();
         return user;
     }
     
     // Atualizar Usuário ( Em especifico sua senha )
-    public void updateUser(User user) throws SQLException {
+    public void updateUser(Investidor user) throws SQLException {
         String sql = "update users set password = ? where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, user.getPassword());
@@ -80,7 +118,7 @@ public class UserDao {
     }
     
     // Excluir Usuário
-    public void excluir(User user) throws SQLException{
+    public void excluir(Investidor user) throws SQLException{
         String sql = "delete from users where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, user.getCpf());
