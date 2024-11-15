@@ -18,6 +18,16 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jLabelWelcome = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsers = new javax.swing.JTable();
+        jBtnNewInvestidor = new javax.swing.JButton();
+        jBtnExtrato2 = new javax.swing.JButton();
+        jBtnExcluirInvestidor = new javax.swing.JButton();
+        jLabelWelcome2 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableMoedas = new javax.swing.JTable();
+        jBtnExcluirMoeda = new javax.swing.JButton();
+        jBtnUpdateMoeda = new javax.swing.JButton();
+        jBtnNewMoeda = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jBtnConta = new javax.swing.JButton();
@@ -29,11 +39,13 @@ public class AdminHubFrame extends javax.swing.JFrame {
         setBackground(new java.awt.Color(36, 25, 19));
 
         jPanel16.setBackground(new java.awt.Color(225, 214, 154));
+        jPanel16.setForeground(new java.awt.Color(36, 25, 19));
 
         jSeparator3.setForeground(new java.awt.Color(36, 25, 19));
 
         jLabelWelcome.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabelWelcome.setText("Bem vindo investidor!");
+        jLabelWelcome.setForeground(new java.awt.Color(36, 25, 19));
+        jLabelWelcome.setText("Investidores");
 
         jScrollPane1.setBackground(new java.awt.Color(36, 25, 24));
 
@@ -66,6 +78,98 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jTableUsers.setGridColor(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(jTableUsers);
 
+        jBtnNewInvestidor.setBackground(new java.awt.Color(36, 25, 19));
+        jBtnNewInvestidor.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnNewInvestidor.setText("Novo Investidor");
+        jBtnNewInvestidor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnNewInvestidorActionPerformed(evt);
+            }
+        });
+
+        jBtnExtrato2.setBackground(new java.awt.Color(36, 25, 19));
+        jBtnExtrato2.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnExtrato2.setText("Consultar Extrato");
+        jBtnExtrato2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExtrato2ActionPerformed(evt);
+            }
+        });
+
+        jBtnExcluirInvestidor.setBackground(new java.awt.Color(153, 0, 0));
+        jBtnExcluirInvestidor.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnExcluirInvestidor.setText("Excluir");
+        jBtnExcluirInvestidor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExcluirInvestidorActionPerformed(evt);
+            }
+        });
+
+        jLabelWelcome2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabelWelcome2.setForeground(new java.awt.Color(36, 25, 19));
+        jLabelWelcome2.setText("Cripto Moedas");
+
+        jSeparator6.setForeground(new java.awt.Color(36, 25, 19));
+
+        jScrollPane3.setBackground(new java.awt.Color(36, 25, 24));
+
+        jTableMoedas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Moeda", "Sigla", "Cotação", "Taxa de Venda", "Taxa de Compra", "Qtd. Comprada"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableMoedas.setGridColor(new java.awt.Color(204, 204, 204));
+        jScrollPane3.setViewportView(jTableMoedas);
+
+        jBtnExcluirMoeda.setBackground(new java.awt.Color(153, 0, 0));
+        jBtnExcluirMoeda.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnExcluirMoeda.setText("Excluir");
+        jBtnExcluirMoeda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExcluirMoedaActionPerformed(evt);
+            }
+        });
+
+        jBtnUpdateMoeda.setBackground(new java.awt.Color(36, 25, 19));
+        jBtnUpdateMoeda.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnUpdateMoeda.setText("Editar Moeda");
+        jBtnUpdateMoeda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnUpdateMoedaActionPerformed(evt);
+            }
+        });
+
+        jBtnNewMoeda.setBackground(new java.awt.Color(36, 25, 19));
+        jBtnNewMoeda.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnNewMoeda.setText("Nova Moeda");
+        jBtnNewMoeda.setActionCommand("Nova Moeda");
+        jBtnNewMoeda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnNewMoedaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -73,23 +177,55 @@ public class AdminHubFrame extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
                     .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+                    .addComponent(jLabelWelcome2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addComponent(jBtnExcluirInvestidor, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnExtrato2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnNewInvestidor))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addComponent(jBtnExcluirMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnUpdateMoeda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnNewMoeda)))))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(28, 28, 28)
                 .addComponent(jLabelWelcome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnNewInvestidor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnExtrato2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnExcluirInvestidor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(268, 268, 268))
+                .addComponent(jLabelWelcome2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnNewMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnUpdateMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnExcluirMoeda))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
@@ -162,17 +298,14 @@ public class AdminHubFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -190,19 +323,61 @@ public class AdminHubFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnSobreActionPerformed
 
+    private void jBtnNewInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewInvestidorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnNewInvestidorActionPerformed
+
+    private void jBtnExtrato2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtrato2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnExtrato2ActionPerformed
+
+    private void jBtnExcluirInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirInvestidorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnExcluirInvestidorActionPerformed
+
+    private void jBtnExcluirMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirMoedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnExcluirMoedaActionPerformed
+
+    private void jBtnUpdateMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateMoedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnUpdateMoedaActionPerformed
+
+    private void jBtnNewMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewMoedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnNewMoedaActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConta;
+    private javax.swing.JButton jBtnExcluirInvestidor;
+    private javax.swing.JButton jBtnExcluirMoeda;
+    private javax.swing.JButton jBtnExtrato2;
     private javax.swing.JButton jBtnLogout;
+    private javax.swing.JButton jBtnLogout2;
+    private javax.swing.JButton jBtnNewInvestidor;
+    private javax.swing.JButton jBtnNewMoeda;
     private javax.swing.JButton jBtnSobre;
+    private javax.swing.JButton jBtnSobre3;
+    private javax.swing.JButton jBtnSobre4;
+    private javax.swing.JButton jBtnUpdateMoeda;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabelWelcome;
+    private javax.swing.JLabel jLabelWelcome1;
+    private javax.swing.JLabel jLabelWelcome2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JTable jTableMoedas;
     private javax.swing.JTable jTableUsers;
+    private javax.swing.JTable jTableUsers1;
     // End of variables declaration//GEN-END:variables
 }
