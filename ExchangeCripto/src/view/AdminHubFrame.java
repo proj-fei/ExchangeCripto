@@ -359,7 +359,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnContaActionPerformed
-        // TODO add your handling code here:
+        ca.conta();
     }//GEN-LAST:event_jBtnContaActionPerformed
 
     private void jBtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogoutActionPerformed

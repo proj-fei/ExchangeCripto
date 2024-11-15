@@ -1130,7 +1130,7 @@ public class HubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnLogoutActionPerformed
 
     private void jBtnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnContaActionPerformed
-        // TODO add your handling code here:
+        ch.conta();
     }//GEN-LAST:event_jBtnContaActionPerformed
 
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefreshActionPerformed

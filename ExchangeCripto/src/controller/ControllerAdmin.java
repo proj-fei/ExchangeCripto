@@ -18,6 +18,7 @@ import model.Moeda;
 import view.AboutUsFrame;
 import view.AdminHubFrame;
 import view.LoginFrame;
+import view.UserFrame;
 
 public class ControllerAdmin {
     
@@ -155,6 +156,11 @@ public class ControllerAdmin {
     public void aboutUs(){
         AboutUsFrame abf = new AboutUsFrame();
         abf.setVisible(true);
+    }
+    
+    public void conta(){
+        UserFrame uf = new UserFrame(this.adm, view);
+        uf.setVisible(true);
     }
     
 }

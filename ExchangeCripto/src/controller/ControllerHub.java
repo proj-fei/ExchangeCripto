@@ -19,6 +19,7 @@ import view.FormCriptoFrame;
 import view.HubFrame;
 import view.FormFrame;
 import view.LoginFrame;
+import view.UserFrame;
 
 public class ControllerHub {
     private HubFrame view;
@@ -149,5 +150,10 @@ public class ControllerHub {
     public void aboutUs(){
         AboutUsFrame abf = new AboutUsFrame();
         abf.setVisible(true);
+    }
+    
+    public void conta(){
+        UserFrame uf = new UserFrame(this.user, view);
+        uf.setVisible(true);
     }
 }
