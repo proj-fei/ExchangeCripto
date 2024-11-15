@@ -84,6 +84,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("JavaCoin - Hub Admin");
         setBackground(new java.awt.Color(36, 25, 19));
 
         jPanel16.setBackground(new java.awt.Color(225, 214, 154));
@@ -362,11 +363,11 @@ public class AdminHubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnContaActionPerformed
 
     private void jBtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogoutActionPerformed
-        // TODO add your handling code here:
+        ca.logout();
     }//GEN-LAST:event_jBtnLogoutActionPerformed
 
     private void jBtnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSobreActionPerformed
-        // TODO add your handling code here:
+        ca.aboutUs();
     }//GEN-LAST:event_jBtnSobreActionPerformed
 
     private void jBtnNewInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewInvestidorActionPerformed
@@ -393,7 +394,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnNewMoedaActionPerformed
 
-private ControllerAdmin ca;
+    private ControllerAdmin ca;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConta;

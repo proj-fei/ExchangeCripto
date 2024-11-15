@@ -32,7 +32,8 @@ public class ExtratoFrame extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("JavaCoin - Extrato");
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
 

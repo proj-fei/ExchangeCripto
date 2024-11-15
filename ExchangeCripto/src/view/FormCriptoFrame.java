@@ -71,6 +71,7 @@ public class FormCriptoFrame extends javax.swing.JFrame {
         jBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("JavaCoin - Formulário");
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
 

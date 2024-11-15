@@ -59,6 +59,7 @@ public class FormFrame extends javax.swing.JFrame {
         jPasswordInput = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("JavaCoin - Formulário");
 
         jPanel1.setBackground(new java.awt.Color(36, 25, 19));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));

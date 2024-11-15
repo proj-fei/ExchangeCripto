@@ -15,7 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import model.Administrador;
 import model.Investidor;
 import model.Moeda;
+import view.AboutUsFrame;
 import view.AdminHubFrame;
+import view.LoginFrame;
 
 public class ControllerAdmin {
     
@@ -142,4 +144,17 @@ public class ControllerAdmin {
 
         return saldoMoedas;  
     }
+        
+    public void logout(){
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        
+        view.dispose();
+    }
+    
+    public void aboutUs(){
+        AboutUsFrame abf = new AboutUsFrame();
+        abf.setVisible(true);
+    }
+    
 }

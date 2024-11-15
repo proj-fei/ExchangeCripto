@@ -13,10 +13,12 @@ import javax.swing.table.DefaultTableModel;
 import model.Investidor;
 import model.Pessoa;
 import model.Wallet;
+import view.AboutUsFrame;
 import view.ExtratoFrame;
 import view.FormCriptoFrame;
 import view.HubFrame;
 import view.FormFrame;
+import view.LoginFrame;
 
 public class ControllerHub {
     private HubFrame view;
@@ -135,5 +137,17 @@ public class ControllerHub {
         }
         
         return false;
+    }
+    
+    public void logout(){
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        
+        view.dispose();
+    }
+    
+    public void aboutUs(){
+        AboutUsFrame abf = new AboutUsFrame();
+        abf.setVisible(true);
     }
 }
