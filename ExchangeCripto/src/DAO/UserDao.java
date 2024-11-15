@@ -96,7 +96,6 @@ public class UserDao {
         }
         
         ArrayList<Investidor> invest = this.getInvestidores();
-        
         Administrador user = new Administrador(
             res.getInt("id"),
             res.getString("cpf"),
@@ -116,17 +115,11 @@ public class UserDao {
         
         String sql = "select * from users where isadmin = 0";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.execute();
         
         ResultSet res = statement.executeQuery();
         
-        if(!res.next()) {
-            return null;
-        }
-        
         ArrayList<Investidor> investidores = new ArrayList<>();
         while(res.next()){
-            
             WalletDao wDao = new WalletDao(this.conn);
             
             int id = res.getInt("id");
@@ -135,8 +128,7 @@ public class UserDao {
             String password = res.getString("password");
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
             Investidor user = new Investidor(id, name, cpf, password, wallet);
-            investidores.add(user);
-        
+            investidores.add(user);        
         }
         
         res.close();

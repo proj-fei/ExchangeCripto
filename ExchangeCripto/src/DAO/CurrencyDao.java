@@ -90,7 +90,7 @@ public class CurrencyDao {
                     taxC, 
                     taxV
             );
-            currency = builder.gerResultado();
+            currency = builder.getResultado();
         }
         
         res.close();
@@ -120,4 +120,31 @@ public class CurrencyDao {
         statement.executeUpdate();
         statement.close();
     }
+    
+    public ArrayList<Moeda> getCurrency() throws SQLException{
+        
+        String sql = "select * from currency";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        ResultSet res = statement.executeQuery();
+        ArrayList<Moeda> moedas= new ArrayList<>();
+        Moeda moeda = null;
+        while(res.next()){
+            BuilderCripto builder = new BuilderCripto();
+            builder.build(
+                    res.getInt("id"),
+                    res.getString("name"),
+                    res.getString("acronym"),
+                    res.getBigDecimal("quotation"),
+                    res.getDouble("taxc"),
+                    res.getDouble("taxv")
+            );
+            moeda = builder.getResultado();
+            moedas.add(moeda);
+        }
+        res.close();
+        statement.close();
+        conn.close();
+        return moedas;
+    }
+    
 }

@@ -10,6 +10,9 @@ public class Administrador extends Pessoa{
         super(id, name, cpf, password);
         this.users = users;
     }
-    
+
+    public ArrayList<Investidor> getUsers() {
+        return users;
+    } 
     
 }

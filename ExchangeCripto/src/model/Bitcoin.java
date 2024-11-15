@@ -6,12 +6,33 @@ public class Bitcoin extends Moeda implements Tarifa, Cotacao {
     private double taxCompra = 2;
     private double taxVenda = 3;
     private BigDecimal cotacao;
+    private BigDecimal balance;
     
     public Bitcoin(int id, String name, String acronym, BigDecimal balance, BigDecimal cotacao, double taxC, double taxV) {
-        super(id, name, acronym, balance);
+        super(id, name, acronym);
         this.taxCompra = taxC;
         this.taxVenda = taxV;
         this.cotacao = cotacao;
+        this.balance = balance;
+    }
+
+    public Bitcoin(int id, String name, String acronym, BigDecimal cotacao, double taxC, double taxV) {
+        super(id, name, acronym);
+        this.cotacao = cotacao;
+        this.taxCompra = taxC;
+        this.taxVenda = taxV;
+    }
+
+    
+    
+    @Override
+    public BigDecimal getBalance() {
+        return balance;
+    }
+    
+    @Override
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
     
     @Override

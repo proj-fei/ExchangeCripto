@@ -6,12 +6,33 @@ public class Ethereum extends Moeda implements Tarifa, Cotacao{
     private double taxCompra = 1;
     private double taxVenda = 2;
     private BigDecimal cotacao;
+    private BigDecimal balance;
     
     public Ethereum(int id, String name, String acronym, BigDecimal balance, BigDecimal cotacao, double taxC, double taxV) {
-        super(id, name, acronym, balance);
+        super(id, name, acronym);
         this.taxCompra = taxC;
         this.taxVenda = taxV;
         this.cotacao = cotacao;
+        this.balance = balance;
+    }
+
+    public Ethereum(int id, String name, String acronym, BigDecimal cotacao, double taxC, double taxV) {
+        super(id, name, acronym);
+        this.cotacao = cotacao;
+        this.taxCompra = taxC;
+        this.taxVenda = taxV;
+    }
+
+    
+    
+    @Override
+    public BigDecimal getBalance() {
+        return balance;
+    }
+    
+    @Override
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
     
     @Override
@@ -23,7 +44,7 @@ public class Ethereum extends Moeda implements Tarifa, Cotacao{
     public double getTaxVenda() {
         return taxVenda;
     }
-    
+
     @Override
     public BigDecimal getCotacao() {
         return cotacao;
