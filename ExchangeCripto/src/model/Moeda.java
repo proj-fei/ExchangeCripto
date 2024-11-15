@@ -7,17 +7,11 @@ public abstract class Moeda {
     private String acronym;
     private BigDecimal balance;
 
-    public Moeda(
-            int id, 
-            String name, 
-            String acronym, 
-            BigDecimal balance
-    ) {
+    public Moeda(int id, String name, String acronym) {
         this.id = id;
-
         this.name = name;
         this.acronym = acronym;
-        this.balance = balance;
+
     }
 
     public String getName() {
@@ -32,13 +26,7 @@ public abstract class Moeda {
         return id;
     }
     
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
+    
     
     // Funções abstratas para permitir que classes filhas acessam esses funções 
     // nas interfaces de forma generia
@@ -50,6 +38,8 @@ public abstract class Moeda {
     public abstract BigDecimal getCotacao();
     public abstract double getTaxCompra();
     public abstract double getTaxVenda();
+    public abstract BigDecimal getBalance();
+    public abstract void setBalance(BigDecimal balance);
     
 }
 

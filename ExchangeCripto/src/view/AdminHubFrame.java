@@ -1,11 +1,59 @@
 package view;
 
+import controller.ControllerAdmin;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import model.Administrador;
 
 public class AdminHubFrame extends javax.swing.JFrame {
 
     public AdminHubFrame(Administrador adm) {
         initComponents();
+        this.ca = new ControllerAdmin(this, adm);
+    }
+
+    public JButton getjBtnConta() {
+        return jBtnConta;
+    }
+
+    public JButton getjBtnExcluirInvestidor() {
+        return jBtnExcluirInvestidor;
+    }
+
+    public JButton getjBtnExcluirMoeda() {
+        return jBtnExcluirMoeda;
+    }
+
+    public JButton getjBtnExtrato2() {
+        return jBtnExtrato2;
+    }
+
+    public JButton getjBtnLogout() {
+        return jBtnLogout;
+    }
+
+    public JButton getjBtnNewInvestidor() {
+        return jBtnNewInvestidor;
+    }
+
+    public JButton getjBtnNewMoeda() {
+        return jBtnNewMoeda;
+    }
+
+    public JButton getjBtnSobre() {
+        return jBtnSobre;
+    }
+
+    public JButton getjBtnUpdateMoeda() {
+        return jBtnUpdateMoeda;
+    }
+
+    public JTable getjTableMoedas() {
+        return jTableMoedas;
+    }
+
+    public JTable getjTableUsers() {
+        return jTableUsers;
     }
     
     
@@ -51,20 +99,20 @@ public class AdminHubFrame extends javax.swing.JFrame {
 
         jTableUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "CPF", "Saldo (R$)", "BTC", "ETH", "XRP"
+                "CPF", "Nome", "Saldo (R$)", "BTC", "ETH", "XRP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -163,7 +211,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jBtnNewMoeda.setBackground(new java.awt.Color(36, 25, 19));
         jBtnNewMoeda.setForeground(new java.awt.Color(255, 255, 255));
         jBtnNewMoeda.setText("Nova Moeda");
-        jBtnNewMoeda.setActionCommand("Nova Moeda");
         jBtnNewMoeda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnNewMoedaActionPerformed(evt);
@@ -181,7 +228,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
                     .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelWelcome2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -298,9 +345,8 @@ public class AdminHubFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +393,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnNewMoedaActionPerformed
 
-  
+private ControllerAdmin ca;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConta;
@@ -355,29 +401,21 @@ public class AdminHubFrame extends javax.swing.JFrame {
     private javax.swing.JButton jBtnExcluirMoeda;
     private javax.swing.JButton jBtnExtrato2;
     private javax.swing.JButton jBtnLogout;
-    private javax.swing.JButton jBtnLogout2;
     private javax.swing.JButton jBtnNewInvestidor;
     private javax.swing.JButton jBtnNewMoeda;
     private javax.swing.JButton jBtnSobre;
-    private javax.swing.JButton jBtnSobre3;
-    private javax.swing.JButton jBtnSobre4;
     private javax.swing.JButton jBtnUpdateMoeda;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabelWelcome;
-    private javax.swing.JLabel jLabelWelcome1;
     private javax.swing.JLabel jLabelWelcome2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTable jTableMoedas;
     private javax.swing.JTable jTableUsers;
-    private javax.swing.JTable jTableUsers1;
     // End of variables declaration//GEN-END:variables
 }

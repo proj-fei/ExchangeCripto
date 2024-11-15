@@ -18,7 +18,16 @@ public class BuilderCripto {
         };
     }
     
-    public Moeda gerResultado(){
+    public void build(int id, String name, String acronym, BigDecimal cotacao, double taxC, double taxV) {
+        resultado = switch (acronym) {
+            case "BTC" -> new Bitcoin(id, name, acronym, cotacao, taxC, taxV);
+            case "ETH" -> new Ethereum(id, name, acronym, cotacao, taxC, taxV);
+            case "XRP" -> new Ripple(id, name, acronym, cotacao, taxC, taxV);
+            default -> new Cripto(id, name, acronym, cotacao, taxC, taxV);
+        };
+    }
+    
+    public Moeda getResultado(){
         return resultado;
     }
     
