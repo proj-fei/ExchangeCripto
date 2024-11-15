@@ -11,6 +11,3 @@ ENV POSTGRES_DB=postgres
 
 # Exponha a porta padrão do PostgreSQL
 EXPOSE 5432
-
-# feat pra add
-# fix para fix
