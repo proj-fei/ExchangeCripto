@@ -84,8 +84,8 @@ public class UserDao {
             Wallet wallet = wDao.getUserWallet(res.getInt("id"));
             Investidor user = new Investidor(
                 res.getInt("id"),
-                res.getString("cpf"),
                 res.getString("name"),
+                res.getString("cpf"),
                 res.getString("password"),
                 wallet
             );
@@ -98,8 +98,8 @@ public class UserDao {
         ArrayList<Investidor> invest = this.getInvestidores();
         Administrador user = new Administrador(
             res.getInt("id"),
-            res.getString("cpf"),
             res.getString("name"),
+            res.getString("cpf"),
             res.getString("password"),
             invest
         );

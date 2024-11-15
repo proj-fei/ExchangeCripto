@@ -1122,15 +1122,15 @@ public class HubFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSobreActionPerformed
-        // TODO add your handling code here:
+        ch.aboutUs();
     }//GEN-LAST:event_jBtnSobreActionPerformed
 
     private void jBtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogoutActionPerformed
-        // TODO add your handling code here:
+        ch.logout();
     }//GEN-LAST:event_jBtnLogoutActionPerformed
 
     private void jBtnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnContaActionPerformed
-        // TODO add your handling code here:
+        ch.conta();
     }//GEN-LAST:event_jBtnContaActionPerformed
 
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefreshActionPerformed
