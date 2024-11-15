@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import DAO.Conexao;
 import DAO.UserDao;
+import model.Administrador;
 import model.Investidor;
+import model.Pessoa;
+import view.AdminHubFrame;
 import view.LoginFrame;
 import view.SignInFrame;
 import view.HubFrame;
@@ -26,7 +29,7 @@ public class ControllerLogin {
         try {
             Connection conn = conexao.getConnection();
             UserDao dao = new UserDao(conn);
-            Investidor user = dao.authUser(
+            Pessoa user = dao.authUser(
                 view.getjTxtCpf().getText(), 
                 view.getjTxtPassword().getText()
             );
@@ -49,9 +52,24 @@ public class ControllerLogin {
                 JOptionPane.INFORMATION_MESSAGE
             );
             
-            view.setVisible(false);
-            HubFrame hf = new HubFrame(user);
-            hf.setVisible(true);
+            view.dispose();
+            // if for investidor faz oq esta abaixo else abre uma outr pagina de adm
+            if(user instanceof Investidor investidor){
+                HubFrame hf = new HubFrame(investidor);
+                hf.setVisible(true);
+            } else if(user instanceof Administrador adm){
+                AdminHubFrame ahf = new AdminHubFrame(adm);
+                ahf.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(
+                    view, 
+                    "Usuário não encontrado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            
             
         } catch(SQLException e) {
             this.cleanFields();

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.table.DefaultTableModel;
 import model.Investidor;
+import model.Pessoa;
 import model.Wallet;
 import view.ExtratoFrame;
 import view.FormCriptoFrame;
@@ -103,7 +104,7 @@ public class ControllerHub {
             try {
             Connection conn = conexao.getConnection();
             UserDao dao = new UserDao(conn);
-            Investidor temp = dao.authUser(
+            Pessoa temp = dao.authUser(
                 user.getCpf(), 
                 senha
             );

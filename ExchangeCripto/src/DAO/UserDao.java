@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import model.Administrador;
 import model.Investidor;
+import model.Pessoa;
 import model.Wallet;
 
 public class UserDao {
@@ -41,9 +44,7 @@ public class UserDao {
             WalletDao dao = new WalletDao(conn);
             dao.createWallet(userId);
         }
-        else {
-            conn.close();
-        }
+        conn.close();
     }
     
     public boolean authPassword(String password, int userId) throws SQLException {
@@ -65,7 +66,7 @@ public class UserDao {
     
     
     // Autenticação de Usuário para login
-    public Investidor authUser(String cpf, String password) throws SQLException {
+    public Pessoa authUser(String cpf, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE cpf = ? AND password = ? ";
         PreparedStatement statement = conn.prepareStatement(sql);
         
@@ -86,7 +87,6 @@ public class UserDao {
                 res.getString("cpf"),
                 res.getString("name"),
                 res.getString("password"),
-                res.getInt("isadmin"),
                 wallet
             );
             res.close();
@@ -94,19 +94,55 @@ public class UserDao {
             conn.close();
             return user;
         }
-        Investidor user = new Investidor(
+        
+        ArrayList<Investidor> invest = this.getInvestidores();
+        
+        Administrador user = new Administrador(
             res.getInt("id"),
             res.getString("cpf"),
             res.getString("name"),
             res.getString("password"),
-            res.getInt("isadmin")
+            invest
         );
+        
         res.close();
         statement.close();
         conn.close();
         return user;
     }
     
+    
+    public ArrayList<Investidor> getInvestidores() throws SQLException {
+        
+        String sql = "select * from users where isadmin = 0";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.execute();
+        
+        ResultSet res = statement.executeQuery();
+        
+        if(!res.next()) {
+            return null;
+        }
+        
+        ArrayList<Investidor> investidores = new ArrayList<>();
+        while(res.next()){
+            
+            WalletDao wDao = new WalletDao(this.conn);
+            
+            int id = res.getInt("id");
+            String name = res.getString("name");
+            String cpf = res.getString("cpf");
+            String password = res.getString("password");
+            Wallet wallet = wDao.getUserWallet(res.getInt("id"));
+            Investidor user = new Investidor(id, name, cpf, password, wallet);
+            investidores.add(user);
+        
+        }
+        
+        res.close();
+        statement.close();
+        return investidores;
+    }
     // Atualizar Usuário ( Em especifico sua senha )
     public void updateUser(Investidor user) throws SQLException {
         String sql = "update users set password = ? where cpf = ?";
