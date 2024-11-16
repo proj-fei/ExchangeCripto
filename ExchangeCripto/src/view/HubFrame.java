@@ -1,7 +1,9 @@
 package view;
 
 import controller.ControllerHub;
+import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import model.Investidor;
 public class HubFrame extends javax.swing.JFrame {
@@ -9,7 +11,11 @@ public class HubFrame extends javax.swing.JFrame {
 
     public HubFrame(Investidor user) {
         initComponents();
+        this.jPanelChart.setLayout(new BorderLayout());
         this.ch = new ControllerHub(this, user);
+        
+        ch.pieChart();
+        
     }
 
     public JLabel getjLabelCPF() {
@@ -32,14 +38,6 @@ public class HubFrame extends javax.swing.JFrame {
         return jLabelETHsaldo;
     }
 
-    public JLabel getjLabelOtherQuote() {
-        return jLabelOtherQuote;
-    }
-
-    public JLabel getjLabelOtherSaldo() {
-        return jLabelOtherSaldo;
-    }
-
     public JLabel getjLabelSaldo() {
         return jLabelSaldo;
     }
@@ -55,17 +53,17 @@ public class HubFrame extends javax.swing.JFrame {
     public JLabel getjLabelXRPsaldo() {
         return jLabelXRPsaldo;
     }
-
-    public JLabel getjLabelOther() {
-        return jLabelOther;
-    }
-
+    
     public ControllerHub getCh() {
         return ch;
     }
 
     public JTable getjTableCriptos() {
         return jTableCriptos;
+    }
+
+    public JPanel getjPanelChart() {
+        return jPanelChart;
     }
     
     /**
@@ -124,11 +122,6 @@ public class HubFrame extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabelETHsaldo = new javax.swing.JLabel();
         jLabelETHquote = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        jLabelOther = new javax.swing.JLabel();
-        jLabelOtherSaldo = new javax.swing.JLabel();
-        jLabelOtherQuote = new javax.swing.JLabel();
-        jBtnChange = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabelXRPsaldo = new javax.swing.JLabel();
@@ -144,6 +137,7 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnConsultar = new javax.swing.JButton();
         jBtnSellCripto = new javax.swing.JButton();
         jBtnBuyCripto = new javax.swing.JButton();
+        jPanelChart = new javax.swing.JPanel();
         jBtnSaque = new javax.swing.JButton();
         jBtnExtrato = new javax.swing.JButton();
         jBtnDeposito = new javax.swing.JButton();
@@ -625,13 +619,14 @@ public class HubFrame extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabelBTCsaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addComponent(jLabelBTCquote, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelBTCquote, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -669,7 +664,7 @@ public class HubFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22)
-                    .addComponent(jLabelETHsaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelETHsaldo, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addComponent(jLabelETHquote, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel19Layout.setVerticalGroup(
@@ -681,63 +676,6 @@ public class HubFrame extends javax.swing.JFrame {
                 .addComponent(jLabelETHsaldo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jLabelETHquote)
-                .addContainerGap())
-        );
-
-        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel20.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(225, 214, 154), new java.awt.Color(225, 214, 154), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
-        jPanel20.setForeground(new java.awt.Color(36, 25, 19));
-
-        jLabelOther.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabelOther.setForeground(new java.awt.Color(36, 25, 19));
-        jLabelOther.setText("Outras Moedas");
-
-        jLabelOtherSaldo.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        jLabelOtherSaldo.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelOtherSaldo.setText("0.00");
-
-        jLabelOtherQuote.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabelOtherQuote.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelOtherQuote.setText("Cotação: 0.00");
-
-        jBtnChange.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnChange.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jBtnChange.setForeground(new java.awt.Color(36, 25, 19));
-        jBtnChange.setText("Trocar");
-        jBtnChange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnChangeActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jLabelOtherQuote, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnChange, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jLabelOther)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabelOtherSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelOther)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelOtherSaldo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnChange, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelOtherQuote, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -765,7 +703,7 @@ public class HubFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel24)
-                    .addComponent(jLabelXRPsaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelXRPsaldo, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addComponent(jLabelXRPquote, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel21Layout.setVerticalGroup(
@@ -817,14 +755,13 @@ public class HubFrame extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jBtnRefresh))
                                 .addGroup(jPanel16Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
                                     .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(131, Short.MAX_VALUE))
+                                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabelCPF)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -848,11 +785,10 @@ public class HubFrame extends javax.swing.JFrame {
                     .addComponent(jBtnRefresh))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(7, 7, 7))
         );
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
@@ -926,22 +862,38 @@ public class HubFrame extends javax.swing.JFrame {
             }
         });
 
+        jPanelChart.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanelChartLayout = new javax.swing.GroupLayout(jPanelChart);
+        jPanelChart.setLayout(jPanelChartLayout);
+        jPanelChartLayout.setHorizontalGroup(
+            jPanelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        jPanelChartLayout.setVerticalGroup(
+            jPanelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 207, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel28Layout.createSequentialGroup()
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .addComponent(jSeparator5)
+                    .addGroup(jPanel28Layout.createSequentialGroup()
                         .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBtnBuyCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnSellCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel30)
+                            .addComponent(jBtnSellCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel28Layout.createSequentialGroup()
+                        .addComponent(jBtnBuyCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel28Layout.setVerticalGroup(
@@ -952,11 +904,14 @@ public class HubFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnBuyCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnSellCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel28Layout.createSequentialGroup()
+                        .addComponent(jBtnBuyCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnSellCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -983,6 +938,11 @@ public class HubFrame extends javax.swing.JFrame {
         jBtnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/btn/1.png"))); // NOI18N
         jBtnDeposito.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51), new java.awt.Color(36, 25, 19), new java.awt.Color(36, 25, 19)));
         jBtnDeposito.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnDeposito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jBtnDepositoMousePressed(evt);
+            }
+        });
         jBtnDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnDepositoActionPerformed(evt);
@@ -1000,8 +960,7 @@ public class HubFrame extends javax.swing.JFrame {
                     .addComponent(jBtnExtrato)
                     .addComponent(jBtnDeposito))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1012,7 +971,7 @@ public class HubFrame extends javax.swing.JFrame {
                         .addComponent(jBtnDeposito)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnSaque)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(jBtnExtrato))
                     .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1134,16 +1093,12 @@ public class HubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnContaActionPerformed
 
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefreshActionPerformed
-        // TODO add your handling code here:
+        ch.updateQuote();
     }//GEN-LAST:event_jBtnRefreshActionPerformed
 
     private void jBtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnUpdateActionPerformed
-
-    private void jBtnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChangeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnChangeActionPerformed
 
     private void jBtnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDepositoActionPerformed
         ch.callAction(1,"Depósito", "Valor:", "Depositar");
@@ -1164,6 +1119,10 @@ public class HubFrame extends javax.swing.JFrame {
     private void jBtnExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtratoActionPerformed
         ch.callAction(3,"", "", "");
     }//GEN-LAST:event_jBtnExtratoActionPerformed
+
+    private void jBtnDepositoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnDepositoMousePressed
+        //jBtnDeposito.setIcon();
+    }//GEN-LAST:event_jBtnDepositoMousePressed
 
     /**
      * @param args the command line arguments
@@ -1205,7 +1164,6 @@ public class HubFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnBuyCripto;
-    private javax.swing.JButton jBtnChange;
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnConta;
     private javax.swing.JButton jBtnDeposito;
@@ -1242,9 +1200,6 @@ public class HubFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelCPF;
     private javax.swing.JLabel jLabelETHquote;
     private javax.swing.JLabel jLabelETHsaldo;
-    private javax.swing.JLabel jLabelOther;
-    private javax.swing.JLabel jLabelOtherQuote;
-    private javax.swing.JLabel jLabelOtherSaldo;
     private javax.swing.JLabel jLabelSaldo;
     private javax.swing.JLabel jLabelWelcome;
     private javax.swing.JLabel jLabelXRPquote;
@@ -1261,7 +1216,6 @@ public class HubFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel28;
@@ -1272,6 +1226,7 @@ public class HubFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelChart;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;

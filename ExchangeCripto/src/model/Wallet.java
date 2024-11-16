@@ -1,6 +1,7 @@
 package model;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -88,6 +89,30 @@ public class Wallet {
     public BigDecimal getXRPQuote() {
         return ripple.getCotacao();
     }
+
+    public Bitcoin getBitcoin() {
+        return bitcoin;
+    }
+
+    public Ethereum getEthereum() {
+        return ethereum;
+    }
+
+    public Ripple getRipple() {
+        return ripple;
+    }
+    
+    public void updateQuote() {
+        bitcoin.updateCotacao();
+        ethereum.updateCotacao();
+        ripple.updateCotacao();
+        
+        if (!criptos.isEmpty()){
+            for(Cripto c : criptos) {
+                c.updateCotacao();
+            }
+        }
+    }
     
     // Coleta generia de cotação para demais moedas
     public BigDecimal getGenericCoinQuote(int index) {
@@ -118,11 +143,11 @@ public class Wallet {
             Object[] linha = {
                 c.getName(),
                 c.getAcronym(),
-                c.getCotacao(),
+                c.getCotacao().setScale(6, RoundingMode.HALF_UP),
                 String.format("%,2f%%", c.getTaxCompra()),
                 String.format("%,2f%%", c.getTaxVenda()),
-                "R$ " + c.calcularCriptoToReal(c.getBalance()).setScale(2),
-                c.getBalance().setScale(5, BigDecimal.ROUND_HALF_UP) + " " + c.getAcronym()
+                "R$ "+ c.calcularCriptoToReal(c.getBalance()).setScale(2,RoundingMode.HALF_UP ),
+                c.getBalance().setScale(6, RoundingMode.HALF_UP) + " " + c.getAcronym()
                 
             };
             criptoData.add(linha);

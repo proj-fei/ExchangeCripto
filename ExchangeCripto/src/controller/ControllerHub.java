@@ -2,7 +2,9 @@ package controller;
 
 import DAO.Conexao;
 import DAO.UserDao;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,9 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.table.DefaultTableModel;
+import model.Cripto;
 import model.Investidor;
 import model.Pessoa;
 import model.Wallet;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import view.AboutUsFrame;
 import view.ExtratoFrame;
 import view.FormCriptoFrame;
@@ -31,6 +38,7 @@ public class ControllerHub {
         this.user = user;
         this.wallet = user.getWallet();
         
+        wallet.updateQuote();
         this.populateHomePageData();
     }
     
@@ -50,6 +58,7 @@ public class ControllerHub {
         view.getjLabelXRPquote().setText("Cotação: " + wallet.getXRPQuote());
         
         this.updateCriptoTable();
+        this.pieChart();
     }
     
     public void callAction(int num,String title, String subTitle, String btnText){
@@ -84,7 +93,6 @@ public class ControllerHub {
             modelo.addRow(linha);
         }
     }
-    
     
     public boolean authPanel() {
         JPasswordField passwordField = new JPasswordField(10);
@@ -140,11 +148,63 @@ public class ControllerHub {
         return false;
     }
     
-    public void logout(){
-        LoginFrame lf = new LoginFrame();
-        lf.setVisible(true);
+    public void updateQuote(){
+        wallet.updateQuote();
+        view.getjLabelBTCquote().setText("Cotação: " + wallet.getBTCQuote());
+        view.getjLabelETHquote().setText("Cotação: " + wallet.getETHQuote());
+        view.getjLabelXRPquote().setText("Cotação: " + wallet.getXRPQuote());
         
-        view.dispose();
+        this.updateCriptoTable();
+    }
+    
+    
+    public void pieChart() {
+       DefaultPieDataset dataset = new DefaultPieDataset();
+       
+       
+       dataset.setValue("BTC", wallet
+               .getBitcoin()
+               .calcularCriptoToReal(wallet.getBTCBalance())
+       );
+       
+       dataset.setValue("ETH", wallet
+               .getEthereum()
+               .calcularCriptoToReal(wallet.getETHBalance())
+       );
+       
+       dataset.setValue("XRP", wallet
+               .getRipple()
+               .calcularCriptoToReal(wallet.getXRPBalance())
+       );
+       
+       for(Cripto c : wallet.getCriptos()){
+           dataset.setValue(
+                   c.getAcronym(),
+                   c.calcularCriptoToReal(c.getBalance())
+           );
+       }
+       
+       JFreeChart pieChart = ChartFactory.createPieChart(
+               "Valor em Cripto Moedas",      // Título
+               dataset,                            // Dados
+               true,
+               true,
+               false
+       );
+       
+       ChartPanel chartPanel = new ChartPanel(pieChart);
+       chartPanel.setMouseWheelEnabled(true);
+       chartPanel.setPreferredSize(new Dimension(450,250));
+       chartPanel.setSize(new Dimension(250, 250));
+       chartPanel.setBackground(Color.WHITE);
+       chartPanel.setForeground(Color.WHITE);
+       view.getjPanelChart().setPreferredSize(new Dimension(450, 250));
+       view.getjPanelChart().removeAll();
+       view.getjPanelChart().add(chartPanel, BorderLayout.CENTER);
+       view.getjPanelChart().revalidate();
+       view.getjPanelChart().repaint();
+       view.pack();
+
     }
     
     public void aboutUs(){
@@ -155,5 +215,12 @@ public class ControllerHub {
     public void conta(){
         UserFrame uf = new UserFrame(this.user, view);
         uf.setVisible(true);
+    }
+    
+    public void logout(){
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        
+        view.dispose();
     }
 }

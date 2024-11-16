@@ -88,7 +88,7 @@ public class ControllerAdmin {
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 view, 
-                "Erro de Conexão" + e,
+                "Erro de Conexão",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );

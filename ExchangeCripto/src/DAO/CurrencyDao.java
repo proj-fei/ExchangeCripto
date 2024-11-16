@@ -1,6 +1,7 @@
 package DAO;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,7 +92,7 @@ public class CurrencyDao {
             int id = res.getInt("id");
             String name = res.getString("name");
             String acronym = res.getString("acronym");
-            BigDecimal quote = res.getBigDecimal("quotation");
+            BigDecimal quote = res.getBigDecimal("quotation").setScale(6, RoundingMode.HALF_UP);
             double taxV = res.getDouble("taxv");
             double taxC = res.getDouble("taxc");
             
@@ -196,6 +197,17 @@ public class CurrencyDao {
         stmt.executeUpdate();
         stmt.close();
         conn.close(); 
+    }
+    
+    public void updateCurrencyQuote(int id, BigDecimal quote) throws SQLException {
+        String sql = "update currency set quotation = ? where id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setBigDecimal(1, quote);
+        statement.setInt(2, id);
+        statement.executeUpdate();
+        statement.close();
+        conn.close();
+
     }
     
 }
