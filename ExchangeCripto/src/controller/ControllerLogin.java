@@ -22,7 +22,7 @@ public class ControllerLogin {
         this.view = view;
         this.signInView = signInView;
     }
-    
+
     public void login(){
         Conexao conexao = new Conexao();
         
@@ -82,7 +82,7 @@ public class ControllerLogin {
         }
     }
     
-    public void goToSignIn(){
+     public void goToSignIn(){
        this.cleanFields();
        view.setVisible(false);
        signInView.setVisible(true);

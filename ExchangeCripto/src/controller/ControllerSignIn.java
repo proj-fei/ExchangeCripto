@@ -32,7 +32,7 @@ public class ControllerSignIn {
                 JOptionPane.ERROR_MESSAGE
             );
         }
-        else if (cpf.length() > 11){
+        else if (cpf.length() != 11){
             JOptionPane.showMessageDialog(
                 view, 
                 "O CPF só pode ter 11 algarismos! sem caracteres",
@@ -47,34 +47,33 @@ public class ControllerSignIn {
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
-        }
-        
-        try {
-            Connection conn = conexao.getConnection();
-            UserDao dao = new UserDao(conn);
-            dao.createUser(cpf, name, password, 0);
+        }else{
+            try {
+                Connection conn = conexao.getConnection();
+                UserDao dao = new UserDao(conn);
+                dao.createUser(cpf, name, password, 0);
             
-            this.cleanFields();
+                this.cleanFields();
             
-            JOptionPane.showMessageDialog(
-                view, 
-                "Usuário Criado com Sucesso!",
-                "Erro",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            this.goToLogIn();
+                JOptionPane.showMessageDialog(
+                    view, 
+                    "Usuário Criado com Sucesso!",
+                    "Erro",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                this.goToLogIn();
             
-        } catch(SQLException e) {
-            this.cleanFields();
+            } catch(SQLException e) {
+                this.cleanFields();
             
-            JOptionPane.showMessageDialog(
-                view, 
-                "Erro de Conexão",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-        
+                JOptionPane.showMessageDialog(
+                    view, 
+                    "Erro de Conexão",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } 
     }
     
     public void goToLogIn(){
