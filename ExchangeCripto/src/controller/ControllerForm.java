@@ -11,6 +11,7 @@ import DAO.UserDao;
 import DAO.WalletDao;
 import java.awt.Choice;
 import java.math.RoundingMode;
+import model.Cripto;
 import model.Moeda;
 import model.Investidor;
 import model.Wallet;
@@ -44,8 +45,8 @@ public class ControllerForm {
         
         selector = ffCriptoView.getjSelectCriptos();
         selector.removeAll();
-        for(Moeda moeda : wallet.getCriptos()) {
-        
+        for(Cripto c : wallet.getCriptos()) {
+            selector.add(c.getName());
         }
         selector.add("Bitcoin");
         selector.add("Ethereum");
