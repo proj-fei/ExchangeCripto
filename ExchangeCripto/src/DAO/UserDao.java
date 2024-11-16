@@ -146,7 +146,7 @@ public class UserDao {
     }
     
     // Excluir Usuário
-    public void excluir(Investidor user) throws SQLException{
+    public void deleteUser(Investidor user) throws SQLException{
         String sql = "delete from users where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, user.getCpf());

@@ -2,11 +2,14 @@ package view;
 
 import controller.ControllerAdmin;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.Administrador;
+import model.Investidor;
 
 public class AdminHubFrame extends javax.swing.JFrame {
 
+    
     public AdminHubFrame(Administrador adm) {
         initComponents();
         this.ca = new ControllerAdmin(this, adm);
@@ -100,20 +103,20 @@ public class AdminHubFrame extends javax.swing.JFrame {
 
         jTableUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "CPF", "Nome", "Saldo (R$)", "BTC", "ETH", "XRP"
+                "ID", "CPF", "Nome", "Saldo (R$)", "BTC", "ETH", "XRP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -125,6 +128,11 @@ public class AdminHubFrame extends javax.swing.JFrame {
             }
         });
         jTableUsers.setGridColor(new java.awt.Color(204, 204, 204));
+        jTableUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsersMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableUsers);
 
         jBtnNewInvestidor.setBackground(new java.awt.Color(36, 25, 19));
@@ -164,20 +172,20 @@ public class AdminHubFrame extends javax.swing.JFrame {
 
         jTableMoedas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Moeda", "Sigla", "Cotação", "Taxa de Venda", "Taxa de Compra", "Qtd. Comprada"
+                "ID", "Moeda", "Sigla", "Cotação", "Taxa de Venda", "Taxa de Compra", "Qtd. Comprada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -189,6 +197,11 @@ public class AdminHubFrame extends javax.swing.JFrame {
             }
         });
         jTableMoedas.setGridColor(new java.awt.Color(204, 204, 204));
+        jTableMoedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMoedasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableMoedas);
 
         jBtnExcluirMoeda.setBackground(new java.awt.Color(153, 0, 0));
@@ -371,28 +384,36 @@ public class AdminHubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnSobreActionPerformed
 
     private void jBtnNewInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewInvestidorActionPerformed
-        // TODO add your handling code here:
+        ca.createUserScreen();
     }//GEN-LAST:event_jBtnNewInvestidorActionPerformed
 
     private void jBtnExtrato2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtrato2ActionPerformed
-        // TODO add your handling code here:
+        ca.getExtratoByIndex();
     }//GEN-LAST:event_jBtnExtrato2ActionPerformed
 
     private void jBtnExcluirInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirInvestidorActionPerformed
-        // TODO add your handling code here:
+        ca.deleteUserByIndex();
     }//GEN-LAST:event_jBtnExcluirInvestidorActionPerformed
 
     private void jBtnExcluirMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.deleteMoeda();
     }//GEN-LAST:event_jBtnExcluirMoedaActionPerformed
 
     private void jBtnUpdateMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.updateMoedaScreen();
     }//GEN-LAST:event_jBtnUpdateMoedaActionPerformed
 
     private void jBtnNewMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.createMoedaScreen();
     }//GEN-LAST:event_jBtnNewMoedaActionPerformed
+
+    private void jTableUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsersMouseClicked
+        ca.UserMouseCLicked(evt);
+    }//GEN-LAST:event_jTableUsersMouseClicked
+
+    private void jTableMoedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMoedasMouseClicked
+        ca.UserMouseCLickedCoin(evt);
+    }//GEN-LAST:event_jTableMoedasMouseClicked
 
     private ControllerAdmin ca;
 

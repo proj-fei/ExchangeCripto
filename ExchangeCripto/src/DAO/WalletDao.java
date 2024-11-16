@@ -46,11 +46,12 @@ public class WalletDao {
         }
         
         CurrencyDao cDao = new CurrencyDao(conn);
-        cDao.createLinkWalletCurrency(walletId, 1); // Cria Saldo de Bitcoin
-        cDao.createLinkWalletCurrency(walletId, 2); // Cria Saldo de Ethereum
-        cDao.createLinkWalletCurrency(walletId, 3); // Cria saldo de Ripple
         
-        conn.close();
+        ArrayList<Moeda> moedas = cDao.getCurrency();
+        for (Moeda m : moedas){
+            cDao.createLinkWalletCurrency(walletId, m.getId());
+        }
+       
     }
     
     public Wallet getUserWallet(int id) throws SQLException {
