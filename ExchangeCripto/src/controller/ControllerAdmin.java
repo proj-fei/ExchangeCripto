@@ -24,7 +24,9 @@ import view.UserFrame;
 import controller.ControllerHub;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import model.BuilderCripto;
 import model.Pessoa;
+import view.NewMoedaFrame;
 import view.NewUserFrame;
 
 public class ControllerAdmin {
@@ -32,7 +34,9 @@ public class ControllerAdmin {
     private AdminHubFrame view;
     private Administrador adm;
     private int selectedUserIndex = -1;
+    private int selectedCoinIndex = -1;
     private NewUserFrame nuf;
+    private NewMoedaFrame nmf;
 
     public ControllerAdmin(AdminHubFrame view, Administrador adm) {
         this.view = view;
@@ -104,8 +108,10 @@ public class ControllerAdmin {
         }
         Map<String, BigDecimal> ball = this.getQuantidadeComprada(criptoNames);
         ArrayList<Object[]> littleMoedas = new ArrayList<>();
+        int index = 0;
         for(Moeda m : moedas){
             Object[] linha = {
+                index++,
                 m.getName(),
                 m.getAcronym(),
                 m.getCotacao(),
@@ -366,6 +372,22 @@ public class ControllerAdmin {
         }
     }
     
+    public void UserMouseCLickedCoin(java.awt.event.MouseEvent evt){
+        int selectedRow = view.getjTableMoedas().rowAtPoint(evt.getPoint());
+        
+        if(selectedRow != -1){
+            selectedCoinIndex = Integer.parseInt(
+                    view.getjTableMoedas()
+                            .getValueAt(selectedRow, 0)
+                            .toString()
+            );
+            
+        }else{
+            System.out.println("Nenhum linha foi clicada.");
+            selectedCoinIndex = -1;
+        }
+    }
+    
     public void getExtratoByIndex(){
         if (selectedUserIndex != -1){
             Investidor user = adm.getUsers().get(selectedUserIndex);
@@ -382,4 +404,219 @@ public class ControllerAdmin {
         }
     }
     
+    public void updateMoedaScreen(){
+        boolean canOpen = authPanel();
+        if(canOpen){
+            nmf = new NewMoedaFrame(this, "Atualizar Moeda");
+            Moeda moeda = adm.getCoins().get(selectedCoinIndex);
+            nmf.getjTxtCoinName().setText(moeda.getName());
+            nmf.getjTxtCoinSigla().setText(moeda.getAcronym());
+            nmf.getjTxtCoinCotacao().setText(moeda.getCotacao().toString());
+            nmf.getjTxtCoinTxV().setText(String.format("%.2f", moeda.getTaxVenda()).replace(",", "."));
+            nmf.getjTxtCoinTxC().setText(String.format("%.2f", moeda.getTaxCompra()).replace(",", "."));
+            
+            adm.updateMoedas();
+            nmf.setVisible(true);
+            
+            
+        }
+    }
+    
+    public void updateMoeda() {
+        Conexao conexao = new Conexao();
+        try {
+            Connection conn = conexao.getConnection();
+            CurrencyDao cd = new CurrencyDao(conn);
+            String name = nmf.getjTxtCoinName().getText();
+            String acronym = nmf.getjTxtCoinSigla().getText();
+            String quote = nmf.getjTxtCoinCotacao().getText();
+            String taxaV = nmf.getjTxtCoinTxV().getText().replace(",", "."); // Substitui vírgula por ponto
+            String taxaC = nmf.getjTxtCoinTxC().getText().replace(",", "."); // Substitui vírgula por ponto
+            double taxC = Double.parseDouble(taxaC);
+            double taxV = Double.parseDouble(taxaV);
+
+            BigDecimal quoteBig = new BigDecimal(quote.replace(",", "."));
+            if (name.isEmpty() || acronym.isEmpty() || quote.isEmpty() || taxaV.isEmpty() || taxaC.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Preencha todos os campos!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } else if (adm.hasCoinNameUpdate(name, selectedCoinIndex)) {
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Já existe moeda com esse nome!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } else {
+                BuilderCripto bc = new BuilderCripto();
+                bc.build(adm.getCoins().get(selectedCoinIndex).getId(), name, acronym, quoteBig, taxC, taxV);
+                Moeda moeda = bc.getResultado();
+                cd.updateCurrencyByIndex(moeda);
+                adm.updateMoedas();
+                updateMoedasTable();
+                for (Investidor i : adm.getUsers()) {
+                    i.updateWallet();
+                }
+
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Moeda Criada com Sucesso!",
+                    "Erro",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                nmf.dispose();
+                adm.updateMoedas();
+                updateMoedasTable();
+            }
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "Erro de Conexão" + e,
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void createMoedaScreen(){
+        boolean canOpen = authPanel();
+        if(canOpen){
+            nmf = new NewMoedaFrame(this, "Nova Moeda");   
+            nmf.setVisible(true);
+            
+        }
+    }
+    
+    public void createMoeda(){
+        Conexao conexao = new Conexao();
+        try{
+            Connection conn = conexao.getConnection();
+            CurrencyDao cd = new CurrencyDao(conn);
+            String name = nmf.getjTxtCoinName().getText();
+            String acronym = nmf.getjTxtCoinSigla().getText();
+            String quote = nmf.getjTxtCoinCotacao().getText();
+            String taxV = nmf.getjTxtCoinTxV().getText();
+            String taxC = nmf.getjTxtCoinTxC().getText();
+            BigDecimal quoteBig = new BigDecimal(quote);
+            adm.updateMoedas();
+            
+            if (name.isEmpty() || acronym.isEmpty() || quote.isEmpty() || taxV.isEmpty() || taxC.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Preencha todos os campos!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else if(adm.hasCoinName(name)){
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Já existe moeda com esse nome!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            else{
+                
+                cd.createCurrency(name, acronym, quoteBig, Integer.parseInt(taxV), Integer.parseInt(taxC));
+                for(Investidor i : adm.getUsers()){
+                    i.updateWallet();
+                }
+               
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Moeda Criada com Sucesso!",
+                    "Erro",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                
+                nmf.dispose();
+                adm.updateMoedas();
+                updateMoedasTable();
+            }
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "Erro de Conexão",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void deleteMoeda() {
+        // Verifica se algum ID foi selecionado
+        if (selectedCoinIndex == -1) {
+            JOptionPane.showMessageDialog(
+                view,
+                "Selecione uma moeda para deletar!",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        boolean canOpen = authPanel();
+        Conexao conexao = new Conexao();
+        if(canOpen){
+            try {
+                Connection conn = conexao.getConnection();
+                CurrencyDao cd = new CurrencyDao(conn);
+
+                // Confirmação do usuário
+                int confirm = JOptionPane.showConfirmDialog(
+                    view,
+                    "Tem certeza que deseja deletar a moeda com ID " 
+                            + selectedCoinIndex + "?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    Moeda moeda = adm.getCoins().get(selectedCoinIndex);
+                    if(
+                        moeda.getName().equalsIgnoreCase("Bitcoin") 
+                        || moeda.getName().equalsIgnoreCase("Ethereum") 
+                        || moeda.getName().equalsIgnoreCase("Ripple")
+                    ){
+                        JOptionPane.showMessageDialog(
+                            view,
+                            "Não é possivel excluir a moeda " + moeda.getName(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }else{
+                        // Chama o DAO para excluir a moeda pelo ID
+                        cd.deleteCurrencyById(adm.getCoins().get(selectedCoinIndex).getId()); 
+
+                        JOptionPane.showMessageDialog(
+                            view,
+                            "Moeda deletada com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+
+                        // Atualiza a tabela de moedas
+                        adm.updateMoedas();
+                        updateMoedasTable();
+
+                        // Reseta o índice selecionado
+                        selectedCoinIndex = -1;
+                    }
+                    
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(
+                    view,
+                    "Erro ao deletar moeda: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+        
+    }
 }

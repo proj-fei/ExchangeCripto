@@ -172,20 +172,20 @@ public class AdminHubFrame extends javax.swing.JFrame {
 
         jTableMoedas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Moeda", "Sigla", "Cotação", "Taxa de Venda", "Taxa de Compra", "Qtd. Comprada"
+                "ID", "Moeda", "Sigla", "Cotação", "Taxa de Venda", "Taxa de Compra", "Qtd. Comprada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -197,6 +197,11 @@ public class AdminHubFrame extends javax.swing.JFrame {
             }
         });
         jTableMoedas.setGridColor(new java.awt.Color(204, 204, 204));
+        jTableMoedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMoedasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableMoedas);
 
         jBtnExcluirMoeda.setBackground(new java.awt.Color(153, 0, 0));
@@ -391,20 +396,24 @@ public class AdminHubFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnExcluirInvestidorActionPerformed
 
     private void jBtnExcluirMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.deleteMoeda();
     }//GEN-LAST:event_jBtnExcluirMoedaActionPerformed
 
     private void jBtnUpdateMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.updateMoedaScreen();
     }//GEN-LAST:event_jBtnUpdateMoedaActionPerformed
 
     private void jBtnNewMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewMoedaActionPerformed
-        // TODO add your handling code here:
+        ca.createMoedaScreen();
     }//GEN-LAST:event_jBtnNewMoedaActionPerformed
 
     private void jTableUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsersMouseClicked
         ca.UserMouseCLicked(evt);
     }//GEN-LAST:event_jTableUsersMouseClicked
+
+    private void jTableMoedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMoedasMouseClicked
+        ca.UserMouseCLickedCoin(evt);
+    }//GEN-LAST:event_jTableMoedasMouseClicked
 
     private ControllerAdmin ca;
 

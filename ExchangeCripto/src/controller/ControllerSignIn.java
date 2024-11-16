@@ -68,7 +68,7 @@ public class ControllerSignIn {
             
                 JOptionPane.showMessageDialog(
                     view, 
-                    "Erro de Conexão",
+                    "Erro de Conexão" + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE
                 );

@@ -33,12 +33,12 @@ public class Wallet {
         } else if (name.equalsIgnoreCase(ripple.getName())) {
             return ripple;
         } else {
-            for(Moeda cripto : this.criptos) {
+            for(Cripto cripto : this.criptos) {
                 if  (name.equalsIgnoreCase(cripto.getName())) {
                     return cripto;
                 }
             }
-        }
+        }    
         return null;
     }
 

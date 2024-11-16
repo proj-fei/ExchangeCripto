@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.BuilderCripto;
+import model.Investidor;
 import model.Moeda;
 
 
@@ -17,17 +18,33 @@ public class CurrencyDao {
         this.conn = conn;
     }
     
-    public void createCurrency(String name, String acronym, BigDecimal quote, int taxV, int taxC) throws SQLException{
+    public void createCurrency(String name, String acronym, BigDecimal quote, double taxV, double taxC) throws SQLException{
         String sql = "INSERT INTO currency (name, acronym, quotation, taxc, taxv) values (?,?,?,?, ?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         
         statement.setString(1, name);
         statement.setString(2, acronym);
         statement.setBigDecimal(3, quote);
-        statement.setInt(4, taxC);
-        statement.setInt(5, taxV);
-        statement.execute();
+        statement.setDouble(4, taxC);
+        statement.setDouble(5, taxV);
+        statement.executeUpdate();
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        int currencyId = 0;
+        if(generatedKeys.next()){
+            currencyId = generatedKeys.getInt(1);
+        }
 
+        statement.close();
+        if(currencyId == 0){
+            throw new SQLException("ID da Moeda não pode ser 0"); 
+        }
+        
+        UserDao ud = new UserDao(conn);
+        ArrayList<Investidor> investidores = ud.getInvestidores();
+        for (Investidor i: investidores){
+            createLinkWalletCurrency(i.getWallet().getId(), currencyId);
+        }
+        
         conn.close();
     }
     
@@ -143,8 +160,42 @@ public class CurrencyDao {
         }
         res.close();
         statement.close();
-        conn.close();
         return moedas;
+    }
+    
+    public boolean moedaExiste(String name) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM currency WHERE name = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; 
+            }
+        }
+        return false;
+    }
+    
+    public void deleteCurrencyById(int id) throws SQLException {
+        String sql = "DELETE FROM currency WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.execute();
+            conn.close();
+        }
+    }
+
+    public void updateCurrencyByIndex(Moeda moeda) throws SQLException{
+        String sql = "UPDATE currency SET name = ?, acronym = ?, quotation = ?, taxc = ?, taxv = ? WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, moeda.getName());
+        stmt.setString(2, moeda.getAcronym());
+        stmt.setBigDecimal(3, moeda.getCotacao());
+        stmt.setDouble(4, moeda.getTaxCompra());
+        stmt.setDouble(5, moeda.getTaxVenda());
+        stmt.setInt(6, moeda.getId());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close(); 
     }
     
 }
