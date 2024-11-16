@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Cripto;
 import model.Investidor;
@@ -92,6 +94,16 @@ public class ControllerHub {
         for (Object[] linha : moedas) {
             modelo.addRow(linha);
         }
+        
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        for (int i = 0; i < view.getjTableCriptos().getColumnCount(); i++) {
+            view.getjTableCriptos()
+                .getColumnModel()
+                .getColumn(i)
+                .setCellRenderer(centralizado);
+        }
     }
     
     public boolean authPanel() {
@@ -157,7 +169,6 @@ public class ControllerHub {
         this.updateCriptoTable();
     }
     
-    
     public void pieChart() {
        DefaultPieDataset dataset = new DefaultPieDataset();
        
@@ -194,11 +205,11 @@ public class ControllerHub {
        
        ChartPanel chartPanel = new ChartPanel(pieChart);
        chartPanel.setMouseWheelEnabled(true);
-       chartPanel.setPreferredSize(new Dimension(450,250));
-       chartPanel.setSize(new Dimension(250, 250));
+       chartPanel.setPreferredSize(new Dimension(400,250));
+       chartPanel.setSize(new Dimension(400, 250));
        chartPanel.setBackground(Color.WHITE);
        chartPanel.setForeground(Color.WHITE);
-       view.getjPanelChart().setPreferredSize(new Dimension(450, 250));
+       view.getjPanelChart().setPreferredSize(new Dimension(400, 250));
        view.getjPanelChart().removeAll();
        view.getjPanelChart().add(chartPanel, BorderLayout.CENTER);
        view.getjPanelChart().revalidate();

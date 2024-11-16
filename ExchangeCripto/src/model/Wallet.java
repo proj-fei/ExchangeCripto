@@ -144,8 +144,8 @@ public class Wallet {
                 c.getName(),
                 c.getAcronym(),
                 c.getCotacao().setScale(6, RoundingMode.HALF_UP),
-                String.format("%,2f%%", c.getTaxCompra()),
-                String.format("%,2f%%", c.getTaxVenda()),
+                c.getTaxCompra() + "%",
+                c.getTaxVenda() + "%",
                 "R$ "+ c.calcularCriptoToReal(c.getBalance()).setScale(2,RoundingMode.HALF_UP ),
                 c.getBalance().setScale(6, RoundingMode.HALF_UP) + " " + c.getAcronym()
                 
