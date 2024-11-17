@@ -1,11 +1,9 @@
 package model;
 
 import DAO.Conexao;
-import DAO.CurrencyDao;
 import DAO.WalletDao;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Investidor extends Pessoa{

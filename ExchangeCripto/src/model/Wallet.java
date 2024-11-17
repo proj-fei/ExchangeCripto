@@ -2,9 +2,6 @@ package model;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 
 public class Wallet {
     private int id;

@@ -22,7 +22,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
-import view.AboutUsFrame;
 import view.ExtratoFrame;
 import view.FormCriptoFrame;
 import view.HubFrame;
@@ -218,10 +217,6 @@ public class ControllerHub {
 
     }
     
-    public void aboutUs(){
-        AboutUsFrame abf = new AboutUsFrame();
-        abf.setVisible(true);
-    }
     
     public void conta(){
         UserFrame uf = new UserFrame(this.user, view);

@@ -2,10 +2,8 @@ package view;
 
 import controller.ControllerAdmin;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.Administrador;
-import model.Investidor;
 
 public class AdminHubFrame extends javax.swing.JFrame {
  
@@ -42,9 +40,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
         return jBtnNewMoeda;
     }
 
-    public JButton getjBtnSobre() {
-        return jBtnSobre;
-    }
 
     public JButton getjBtnUpdateMoeda() {
         return jBtnUpdateMoeda;
@@ -80,7 +75,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jBtnConta = new javax.swing.JButton();
-        jBtnSobre = new javax.swing.JButton();
         jBtnLogout = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
 
@@ -312,15 +306,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
             }
         });
 
-        jBtnSobre.setBackground(new java.awt.Color(36, 25, 19));
-        jBtnSobre.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnSobre.setText("Sobre");
-        jBtnSobre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnSobreActionPerformed(evt);
-            }
-        });
-
         jBtnLogout.setBackground(new java.awt.Color(153, 0, 0));
         jBtnLogout.setForeground(new java.awt.Color(255, 255, 255));
         jBtnLogout.setText("Sair");
@@ -342,7 +327,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnSobre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnConta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -356,8 +340,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnConta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnSobre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBtnLogout)
                 .addGap(15, 15, 15))
@@ -388,10 +370,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
     private void jBtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogoutActionPerformed
         ca.logout();
     }//GEN-LAST:event_jBtnLogoutActionPerformed
-
-    private void jBtnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSobreActionPerformed
-        ca.aboutUs();
-    }//GEN-LAST:event_jBtnSobreActionPerformed
 
     private void jBtnNewInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNewInvestidorActionPerformed
         ca.createUserScreen();
@@ -439,7 +417,6 @@ public class AdminHubFrame extends javax.swing.JFrame {
     private javax.swing.JButton jBtnLogout;
     private javax.swing.JButton jBtnNewInvestidor;
     private javax.swing.JButton jBtnNewMoeda;
-    private javax.swing.JButton jBtnSobre;
     private javax.swing.JButton jBtnUpdateMoeda;
     private javax.swing.JButton jBtnUpdateQuoteMoeda;
     private javax.swing.JLabel jLabel16;
