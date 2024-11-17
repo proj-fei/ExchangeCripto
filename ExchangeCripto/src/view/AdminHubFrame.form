@@ -77,6 +77,8 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jBtnExcluirMoeda" min="-2" pref="88" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jBtnUpdateQuoteMoeda" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jBtnUpdateMoeda" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jBtnNewMoeda" min="-2" max="-2" attributes="0"/>
@@ -114,6 +116,7 @@
                       <Component id="jBtnNewMoeda" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jBtnUpdateMoeda" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jBtnExcluirMoeda" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBtnUpdateQuoteMoeda" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="72" max="32767" attributes="0"/>
               </Group>
@@ -383,6 +386,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnNewMoedaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jBtnUpdateQuoteMoeda">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="13" green="19" red="24" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Atualizar Cota&#xe7;&#xe3;o"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnUpdateQuoteMoedaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

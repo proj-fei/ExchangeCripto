@@ -21,7 +21,6 @@ import view.AdminHubFrame;
 import view.ExtratoFrame;
 import view.LoginFrame;
 import view.UserFrame;
-import controller.ControllerHub;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import model.BuilderCripto;
@@ -189,22 +188,37 @@ public class ControllerAdmin {
         
           
     }
+    
+    public void UserMouseCLicked(java.awt.event.MouseEvent evt){
+        int selectedRow = view.getjTableUsers().rowAtPoint(evt.getPoint());
         
-    public void logout(){
-        LoginFrame lf = new LoginFrame();
-        lf.setVisible(true);
-        
-        view.dispose();
+        if(selectedRow != -1){
+            selectedUserIndex = Integer.parseInt(
+                    view.getjTableUsers()
+                            .getValueAt(selectedRow, 0)
+                            .toString()
+            );
+            
+        }else{
+            System.out.println("Nenhum linha foi clicada.");
+            selectedUserIndex = -1;
+        }
     }
     
-    public void aboutUs(){
-        AboutUsFrame abf = new AboutUsFrame();
-        abf.setVisible(true);
-    }
-    
-    public void conta(){
-        UserFrame uf = new UserFrame(this.adm, view);
-        uf.setVisible(true);
+    public void UserMouseCLickedCoin(java.awt.event.MouseEvent evt){
+        int selectedRow = view.getjTableMoedas().rowAtPoint(evt.getPoint());
+        
+        if(selectedRow != -1){
+            selectedCoinIndex = Integer.parseInt(
+                    view.getjTableMoedas()
+                            .getValueAt(selectedRow, 0)
+                            .toString()
+            );
+            
+        }else{
+            System.out.println("Nenhum linha foi clicada.");
+            selectedCoinIndex = -1;
+        }
     }
     
     public boolean authPanel() {
@@ -356,38 +370,6 @@ public class ControllerAdmin {
         }
     }
     
-    public void UserMouseCLicked(java.awt.event.MouseEvent evt){
-        int selectedRow = view.getjTableUsers().rowAtPoint(evt.getPoint());
-        
-        if(selectedRow != -1){
-            selectedUserIndex = Integer.parseInt(
-                    view.getjTableUsers()
-                            .getValueAt(selectedRow, 0)
-                            .toString()
-            );
-            
-        }else{
-            System.out.println("Nenhum linha foi clicada.");
-            selectedUserIndex = -1;
-        }
-    }
-    
-    public void UserMouseCLickedCoin(java.awt.event.MouseEvent evt){
-        int selectedRow = view.getjTableMoedas().rowAtPoint(evt.getPoint());
-        
-        if(selectedRow != -1){
-            selectedCoinIndex = Integer.parseInt(
-                    view.getjTableMoedas()
-                            .getValueAt(selectedRow, 0)
-                            .toString()
-            );
-            
-        }else{
-            System.out.println("Nenhum linha foi clicada.");
-            selectedCoinIndex = -1;
-        }
-    }
-    
     public void getExtratoByIndex(){
         if (selectedUserIndex != -1){
             Investidor user = adm.getUsers().get(selectedUserIndex);
@@ -403,85 +385,7 @@ public class ControllerAdmin {
             );
         }
     }
-    
-    public void updateMoedaScreen(){
-        boolean canOpen = authPanel();
-        if(canOpen){
-            nmf = new NewMoedaFrame(this, "Atualizar Moeda");
-            Moeda moeda = adm.getCoins().get(selectedCoinIndex);
-            nmf.getjTxtCoinName().setText(moeda.getName());
-            nmf.getjTxtCoinSigla().setText(moeda.getAcronym());
-            nmf.getjTxtCoinCotacao().setText(moeda.getCotacao().toString());
-            nmf.getjTxtCoinTxV().setText(String.format("%.2f", moeda.getTaxVenda()).replace(",", "."));
-            nmf.getjTxtCoinTxC().setText(String.format("%.2f", moeda.getTaxCompra()).replace(",", "."));
-            
-            adm.updateMoedas();
-            nmf.setVisible(true);
-            
-            
-        }
-    }
-    
-    public void updateMoeda() {
-        Conexao conexao = new Conexao();
-        try {
-            Connection conn = conexao.getConnection();
-            CurrencyDao cd = new CurrencyDao(conn);
-            String name = nmf.getjTxtCoinName().getText();
-            String acronym = nmf.getjTxtCoinSigla().getText();
-            String quote = nmf.getjTxtCoinCotacao().getText();
-            String taxaV = nmf.getjTxtCoinTxV().getText().replace(",", "."); // Substitui vírgula por ponto
-            String taxaC = nmf.getjTxtCoinTxC().getText().replace(",", "."); // Substitui vírgula por ponto
-            double taxC = Double.parseDouble(taxaC);
-            double taxV = Double.parseDouble(taxaV);
-
-            BigDecimal quoteBig = new BigDecimal(quote.replace(",", "."));
-            if (name.isEmpty() || acronym.isEmpty() || quote.isEmpty() || taxaV.isEmpty() || taxaC.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    nmf, 
-                    "Preencha todos os campos!",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            } else if (adm.hasCoinNameUpdate(name, selectedCoinIndex)) {
-                JOptionPane.showMessageDialog(
-                    nmf, 
-                    "Já existe moeda com esse nome!",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            } else {
-                BuilderCripto bc = new BuilderCripto();
-                bc.build(adm.getCoins().get(selectedCoinIndex).getId(), name, acronym, quoteBig, taxC, taxV);
-                Moeda moeda = bc.getResultado();
-                cd.updateCurrencyByIndex(moeda);
-                adm.updateMoedas();
-                updateMoedasTable();
-                for (Investidor i : adm.getUsers()) {
-                    i.updateWallet();
-                }
-
-                JOptionPane.showMessageDialog(
-                    nmf, 
-                    "Moeda Criada com Sucesso!",
-                    "Erro",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
-
-                nmf.dispose();
-                adm.updateMoedas();
-                updateMoedasTable();
-            }
-        }catch (SQLException e) {
-            JOptionPane.showMessageDialog(
-                view, 
-                "Erro de Conexão" + e,
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-    
+   
     public void createMoedaScreen(){
         boolean canOpen = authPanel();
         if(canOpen){
@@ -546,6 +450,90 @@ public class ControllerAdmin {
                 JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+    
+    public void updateMoedaScreen(){
+        boolean canOpen = authPanel();
+        if(canOpen){
+            nmf = new NewMoedaFrame(this, "Atualizar Moeda");
+            Moeda moeda = adm.getCoins().get(selectedCoinIndex);
+            nmf.getjTxtCoinName().setText(moeda.getName());
+            nmf.getjTxtCoinSigla().setText(moeda.getAcronym());
+            nmf.getjTxtCoinCotacao().setText(moeda.getCotacao().toString());
+            nmf.getjTxtCoinTxV().setText(String.format("%.2f", moeda.getTaxVenda()).replace(",", "."));
+            nmf.getjTxtCoinTxC().setText(String.format("%.2f", moeda.getTaxCompra()).replace(",", "."));
+            
+            adm.updateMoedas();
+            nmf.setVisible(true);   
+        }
+    }
+    
+    public void updateMoeda() {
+        Conexao conexao = new Conexao();
+        try {
+            Connection conn = conexao.getConnection();
+            CurrencyDao cd = new CurrencyDao(conn);
+            String name = nmf.getjTxtCoinName().getText();
+            String acronym = nmf.getjTxtCoinSigla().getText();
+            String quote = nmf.getjTxtCoinCotacao().getText();
+            String taxaV = nmf.getjTxtCoinTxV().getText().replace(",", "."); // Substitui vírgula por ponto
+            String taxaC = nmf.getjTxtCoinTxC().getText().replace(",", "."); // Substitui vírgula por ponto
+            double taxC = Double.parseDouble(taxaC);
+            double taxV = Double.parseDouble(taxaV);
+
+            BigDecimal quoteBig = new BigDecimal(quote.replace(",", "."));
+            if (name.isEmpty() || acronym.isEmpty() || quote.isEmpty() || taxaV.isEmpty() || taxaC.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Preencha todos os campos!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } else if (adm.hasCoinNameUpdate(name, selectedCoinIndex)) {
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Já existe moeda com esse nome!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } else {
+                BuilderCripto bc = new BuilderCripto();
+                bc.build(adm.getCoins().get(selectedCoinIndex).getId(), name, acronym, quoteBig, taxC, taxV);
+                Moeda moeda = bc.getResultado();
+                cd.updateCurrencyByIndex(moeda);
+                adm.updateMoedas();
+                updateMoedasTable();
+                for (Investidor i : adm.getUsers()) {
+                    i.updateWallet();
+                }
+
+                JOptionPane.showMessageDialog(
+                    nmf, 
+                    "Moeda Criada com Sucesso!",
+                    "Erro",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                nmf.dispose();
+                adm.updateMoedas();
+                updateMoedasTable();
+            }
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "Erro de Conexão" + e,
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void updateQuote(){
+        for(Moeda m : adm.getCoins()){
+            m.updateCotacao();
+        }
+        adm.updateMoedas();
+        this.updateMoedasTable();
     }
     
     public void deleteMoeda() {
@@ -618,5 +606,22 @@ public class ControllerAdmin {
             }
         }
         
+    }
+
+    public void logout(){
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        
+        view.dispose();
+    }
+    
+    public void aboutUs(){
+        AboutUsFrame abf = new AboutUsFrame();
+        abf.setVisible(true);
+    }
+    
+    public void conta(){
+        UserFrame uf = new UserFrame(this.adm, view);
+        uf.setVisible(true);
     }
 }

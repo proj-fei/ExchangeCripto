@@ -167,6 +167,7 @@ public class ControllerHub {
         view.getjLabelXRPquote().setText("Cotação: " + wallet.getXRPQuote());
         
         this.updateCriptoTable();
+        this.pieChart();
     }
     
     public void pieChart() {
@@ -205,16 +206,15 @@ public class ControllerHub {
        
        ChartPanel chartPanel = new ChartPanel(pieChart);
        chartPanel.setMouseWheelEnabled(true);
-       chartPanel.setPreferredSize(new Dimension(400,250));
-       chartPanel.setSize(new Dimension(400, 250));
+       chartPanel.setPreferredSize(new Dimension(400,220));
+       chartPanel.setSize(new Dimension(400, 220));
        chartPanel.setBackground(Color.WHITE);
        chartPanel.setForeground(Color.WHITE);
-       view.getjPanelChart().setPreferredSize(new Dimension(400, 250));
+       view.getjPanelChart().setPreferredSize(new Dimension(400, 220));
        view.getjPanelChart().removeAll();
        view.getjPanelChart().add(chartPanel, BorderLayout.CENTER);
        view.getjPanelChart().revalidate();
        view.getjPanelChart().repaint();
-       view.pack();
 
     }
     
