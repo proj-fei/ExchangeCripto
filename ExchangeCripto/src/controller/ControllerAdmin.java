@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import model.Administrador;
 import model.Investidor;
 import model.Moeda;
-import view.AboutUsFrame;
 import view.AdminHubFrame;
 import view.ExtratoFrame;
 import view.LoginFrame;
@@ -615,10 +614,6 @@ public class ControllerAdmin {
         view.dispose();
     }
     
-    public void aboutUs(){
-        AboutUsFrame abf = new AboutUsFrame();
-        abf.setVisible(true);
-    }
     
     public void conta(){
         UserFrame uf = new UserFrame(this.adm, view);

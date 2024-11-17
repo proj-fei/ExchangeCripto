@@ -6,7 +6,6 @@ import DAO.UserDao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Currency;
 import javax.swing.JOptionPane;
 
 public class Administrador extends Pessoa{
