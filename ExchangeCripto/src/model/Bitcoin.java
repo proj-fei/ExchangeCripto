@@ -1,6 +1,13 @@
 package model;
 
+import DAO.Conexao;
+import DAO.CurrencyDao;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class Bitcoin extends Moeda implements Tarifa, Cotacao {
     private double taxCompra = 2;
@@ -63,13 +70,44 @@ public class Bitcoin extends Moeda implements Tarifa, Cotacao {
     public BigDecimal taxarVenda(BigDecimal value){
         return value.multiply(
             BigDecimal.valueOf(taxVenda).divide(
-               BigDecimal.valueOf(100)
+                BigDecimal.valueOf(100)
             )
         );
     };
     
     @Override    
     public void updateCotacao(){
+        
+        Random random = new Random();
+        Conexao conexao = new Conexao();
+        
+        try{
+            BigDecimal variationPercentage = new BigDecimal(random.nextDouble())
+                .multiply(BigDecimal.valueOf(0.1))
+                .subtract(BigDecimal.valueOf(0.05))
+                .setScale(6, RoundingMode.HALF_UP);
+            
+            BigDecimal variation = cotacao.multiply(
+                variationPercentage
+            );
+            
+            
+            cotacao = cotacao
+                .add(variation)
+                .setScale(6, RoundingMode.HALF_UP);
+            
+            
+            Connection conn = conexao.getConnection();
+            CurrencyDao cDao = new CurrencyDao(conn);
+            cDao.updateCurrencyQuote(super.getId(), cotacao);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Erro de Conexão",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     };
     
     @Override   

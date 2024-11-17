@@ -8,8 +8,7 @@ import model.Administrador;
 import model.Investidor;
 
 public class AdminHubFrame extends javax.swing.JFrame {
-
-    
+ 
     public AdminHubFrame(Administrador adm) {
         initComponents();
         this.ca = new ControllerAdmin(this, adm);
@@ -58,9 +57,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
     public JTable getjTableUsers() {
         return jTableUsers;
     }
-    
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -79,6 +76,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
         jBtnExcluirMoeda = new javax.swing.JButton();
         jBtnUpdateMoeda = new javax.swing.JButton();
         jBtnNewMoeda = new javax.swing.JButton();
+        jBtnUpdateQuoteMoeda = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jBtnConta = new javax.swing.JButton();
@@ -231,6 +229,15 @@ public class AdminHubFrame extends javax.swing.JFrame {
             }
         });
 
+        jBtnUpdateQuoteMoeda.setBackground(new java.awt.Color(36, 25, 19));
+        jBtnUpdateQuoteMoeda.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnUpdateQuoteMoeda.setText("Atualizar Cotação");
+        jBtnUpdateQuoteMoeda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnUpdateQuoteMoedaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -255,6 +262,8 @@ public class AdminHubFrame extends javax.swing.JFrame {
                                 .addComponent(jBtnNewInvestidor))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                                 .addComponent(jBtnExcluirMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnUpdateQuoteMoeda)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBtnUpdateMoeda)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -285,7 +294,8 @@ public class AdminHubFrame extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnNewMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnUpdateMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnExcluirMoeda))
+                    .addComponent(jBtnExcluirMoeda)
+                    .addComponent(jBtnUpdateQuoteMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
@@ -415,6 +425,10 @@ public class AdminHubFrame extends javax.swing.JFrame {
         ca.UserMouseCLickedCoin(evt);
     }//GEN-LAST:event_jTableMoedasMouseClicked
 
+    private void jBtnUpdateQuoteMoedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateQuoteMoedaActionPerformed
+        ca.updateQuote();
+    }//GEN-LAST:event_jBtnUpdateQuoteMoedaActionPerformed
+
     private ControllerAdmin ca;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -427,6 +441,7 @@ public class AdminHubFrame extends javax.swing.JFrame {
     private javax.swing.JButton jBtnNewMoeda;
     private javax.swing.JButton jBtnSobre;
     private javax.swing.JButton jBtnUpdateMoeda;
+    private javax.swing.JButton jBtnUpdateQuoteMoeda;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabelWelcome;
     private javax.swing.JLabel jLabelWelcome2;

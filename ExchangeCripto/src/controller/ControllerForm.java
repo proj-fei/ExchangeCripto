@@ -10,6 +10,8 @@ import DAO.ExtratoDao;
 import DAO.UserDao;
 import DAO.WalletDao;
 import java.awt.Choice;
+import java.math.RoundingMode;
+import model.Cripto;
 import model.Moeda;
 import model.Investidor;
 import model.Wallet;
@@ -43,8 +45,8 @@ public class ControllerForm {
         
         selector = ffCriptoView.getjSelectCriptos();
         selector.removeAll();
-        for(Moeda moeda : wallet.getCriptos()) {
-        
+        for(Cripto c : wallet.getCriptos()) {
+            selector.add(c.getName());
         }
         selector.add("Bitcoin");
         selector.add("Ethereum");
@@ -292,9 +294,14 @@ public class ControllerForm {
             wallet.setBalance(novoSaldo);
        
             // Operação da Cripto
-            BigDecimal qtdCripto = cripto.calcularRealToCripto(value);
+            BigDecimal qtdCripto = cripto
+                    .calcularRealToCripto(value)
+                    .setScale(6,RoundingMode.HALF_UP);
             BigDecimal taxa = cripto.taxarCompra(qtdCripto);
-            BigDecimal valorFinal = qtdCripto.subtract(taxa);
+            BigDecimal valorFinal = qtdCripto
+                    .subtract(taxa)
+                    .setScale(6,RoundingMode.HALF_UP);
+            
             cripto.setBalance(valorFinal.add(cripto.getBalance()));
 
             // Criado DAO
@@ -334,7 +341,7 @@ public class ControllerForm {
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
-                "Erro de Conexão: ",
+                "Erro de Conexão",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -355,7 +362,7 @@ public class ControllerForm {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                 ffCriptoView, 
-                "Ocorreu um erro inesperado.",
+                "Ocorreu um erro inesperado." + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
