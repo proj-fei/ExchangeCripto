@@ -60,7 +60,11 @@ Ao iniciar o banco seja no PgAdmin4 ou pelo docker é necessário rodar os segui
 
 Com esses scripts as tabelas são criadas e as moedas principais e um usuário de administrador são adicionados ao banco.
 
-Este projeto foi desenvolvido com base nos conceitos de Programação Orientada a Objetos e boas práticas de desenvolvimento de software.
+## Sobre Projeto
+Este projeto foi desenvolvido com base nos conceitos de Programação Orientada a Objetos e boas práticas de desenvolvimento de software para um projeto da matéria ORIENTAÇÃO A OBJETOS do 3º semestre do curso de Ciência da Computação - FEI.
+
+Link do video do projeto:
+https://www.youtube.com/watch?v=4Tv9R5B8htM&t=392s
 
 ## Membros
 
