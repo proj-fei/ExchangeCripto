@@ -1,4 +1,4 @@
-# ExchangeCripto
+# JavaCoin - Exchange Cripto
 
 Este projeto é uma aplicação para gestão de uma Exchange de Criptomoedas, permitindo operações como compra e venda de ativos digitais (Bitcoin, Ethereum e Ripple) e controle de carteiras de investimento. A aplicação foi desenvolvida com foco na simplicidade de uso e persistência de dados, utilizando NetBeans para o desenvolvimento, Docker para o banco de dados, e DBeaver para a administração e visualização do banco.
 
@@ -49,5 +49,20 @@ Definir variáveis do banco:
     "jdbc:postgresql://localhost:5432/postgres", // url de conexão
     "postgres",                                  // user
     "postgres"                                   // password
-``` 
+```
+
+## Configurar Banco de dados
+
+Ao iniciar o banco seja no PgAdmin4 ou pelo docker é necessário rodar os seguintes scripts, na respectiva ordem:
+
+- create_table.sql
+- insert_basic_data.sql
+
+Com esses scripts as tabelas são criadas e as moedas principais e um usuário de administrador são adicionados ao banco.
+
 Este projeto foi desenvolvido com base nos conceitos de Programação Orientada a Objetos e boas práticas de desenvolvimento de software.
+
+## Membros
+
+- Arthur Leal Mussio  - RA: 22.223.017-9
+- Felipe Brum Pereira - RA: 22.123.112-9
